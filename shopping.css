@@ -1,0 +1,89 @@
+* {
+    font-family: monaco,Consolas,Lucida Console,monospace;;
+}
+body {
+    background-color: #faeee7;
+}
+
+.navbar {
+    background-color: #ff8ba7;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.navbar img {
+    float: left;
+    display: block;
+    text-align: center;
+    padding: 14px 45px;
+}
+#header {
+    font-size: 4rem;
+    padding:15px
+}
+.widget {
+    background-color: #fffffe;
+    font-size: 2rem;
+}
+
+.widgetcolor {
+    background-color: #ff8ba7;
+    padding:8px;
+}
+
+.halfwid1 {
+    background-color: #fffffe;
+    font-size: 2rem;
+    flex: 49%;
+}
+
+.halfwid2 {
+    background-color: #fffffe;
+    font-size: 2rem;
+    flex: 49%;
+}
+.content{
+    background-color: #fffffe;
+}
+
+.widgetcolor p {
+    /* padding: 2px; */
+    padding-left: 1rem;
+    color: #33272a;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+}
+
+#add-item {
+    font-size: 2rem;
+    margin-left: 13rem;
+    text-align: center;
+    padding-right: 1.1rem;
+}
+
+#shopping-list {
+    font-size: 1.5rem;
+}
+
+.notes {
+    font-size: 2rem;
+    float: right;
+    margin-top: 0.55rem;
+}
+
+.button {
+    background-color: #ff8ba7;
+    height: 3.4rem;
+    width: 10rem;
+    float: right;
+    display: flex;
+    justify-content: center;
+}
+
+
+

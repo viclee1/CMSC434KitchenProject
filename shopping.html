@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>CMSC434 Checkpoint Phase</title>
+    <link rel="stylesheet" href="shopping.css" />
+</head>
+
+<body>
+
+    <div id="header" class="flex-container">
+        <span style="vertical-align:middle">Shopping List</span>
+        <div class="widgetcolor" id="add-item" onclick="addItem()">
+            <p>+ Add Item</p>
+        </div>
+    </div>
+
+    <div id="shopping-list">
+    </div>
+
+    <br>
+
+    <div class="navbar">
+        <img src="basic_home.png" width="100" height="100">
+        <img src="fridge.png" width="100" height="100">
+        <img src="ecommerce_cart.png" width="100" height="100">
+        <img src="chef.png" width="100" height="100">
+        <img src="community.png" width="100" height="100">
+    </div>
+
+    <script>
+        let counter = 0
+        function addItem() {
+            let parent = document.getElementById("shopping-list")
+            let newElem = document.createElement("h1")
+            let labelID = "label" + counter
+            newElem.id = "listItem" + counter
+            newElem.innerHTML += "<input type=\"checkbox\" id=counter/> <label for=counter contentEditable=\"true\" id=labelID> Item " + counter + "</label>"
+            counter += 1
+            newElem.innerHTML += "<span class=\"button\" type=\"button\" onclick=\"deleteItem(this.parentNode.id)\">X</span>"
+            newElem.innerHTML += "<span class=\"notes\">[NOTES]</span>"
+            newElem.classList.add("widgetcolor")
+            newElem.classList.add("header")
+            parent.appendChild(newElem)
+        }
+        
+        function deleteItem(id) {
+            currElem = document.getElementById(id)
+            currElem.parentNode.removeChild(currElem)
+        }
+    </script>
+
+</body>
