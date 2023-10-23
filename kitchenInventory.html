@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Kitchen Inventory</title>
+    <link rel="stylesheet" href="kitchenInventory.css" />
+</head>
+
+<body>
+    <div><p class="title">Kitchen Inventory <button class="left">+ Add Item</button></p></div>
+    <div><p class="sub">Filter By <select></select> Order By <select></select></p></div>
+    <table>
+        <tbody>
+            <tr id="outline">
+                <tr>
+                    <td id="imgRow" rowspan="2"><img src="ramen.jpeg" width="100" height="100"></td>
+                    <td>Ramen</td>
+                </tr>
+                <tr>
+                    <td><label for="quantity">QTY</label><input type="number" id="quantity" name="quantity" min="1" style="width: 20px;">
+                        <label for="exp">Expires</label><input type="date" id="exp" name="exp"></td>
+                </tr>
+            </tr>
+
+            <tr id="outline">
+                <tr>
+                    <td id="imgRow" rowspan="2"><img src="cereal.jpeg" width="100" height="100"></td>
+                    <td>Cereal</td>
+                </tr>
+                <tr>
+                    <td><label for="quantity">QTY</label><input type="number" id="quantity" name="quantity" min="1" style="width: 20px;">
+                        <label for="exp">Expires</label><input type="date" id="exp" name="exp"></td>
+                </tr>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="navbar">
+        <button><img src="basic_home.png" width="100" height="100"></button>
+        <button><img src="fridge.png" width="100" height="100"></button>
+        <button><img src="ecommerce_cart.png" width="100" height="100"></button>
+        <button><img src="chef.png" width="100" height="100"></button>
+        <button><img src="community.png" width="100" height="100"></button>
+    </div>
+</body>
