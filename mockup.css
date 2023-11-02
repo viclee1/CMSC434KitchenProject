@@ -53,3 +53,19 @@ body {
     padding-left: 1rem;
     color: #33272a;
 }
+
+.user {
+    background-color: #ff8ba7;
+    padding:15px;
+    display: flex;
+    flex-direction: row;
+    margin: 15px;
+}
+
+.userHeader {
+    font-size: 2rem;
+    display:inline;
+}
+.allergies {
+    font-size: 1.5rem;
+}
