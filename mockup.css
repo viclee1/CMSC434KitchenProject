@@ -6,7 +6,7 @@ body {
 }
 
 .navbar {
-    background-color: #ff8ba7;
+    background-color: #A7C7E7;
     overflow: hidden;
     position: fixed;
     bottom: 0;
@@ -29,7 +29,7 @@ body {
 }
 
 .widgetcolor {
-    background-color: #ff8ba7;
+    background-color: #A7C7E7;
     padding:1px;
 }
 
@@ -55,7 +55,7 @@ body {
 }
 
 .user {
-    background-color: #ff8ba7;
+    background-color: #A7C7E7;
     padding:15px;
     display: flex;
     flex-direction: row;
