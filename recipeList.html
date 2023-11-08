@@ -9,22 +9,29 @@
 
 <body>
     <div id="header">
-        <span style="vertical-align:middle">Recipes</span>
+        <span style="vertical-align: middle">Recipes</span>
     </div>
-        
-    <button onclick="newRecipe()" class="addRecipe">+ Add Recipe</button> 
+
+    <button onclick="newRecipe()" class="addRecipe">+ Add Recipe</button>
     <div class="form-popup" id="myForm">
         <form class="form-container">
-          <h1 class= 'element'>Add New Recipe</h1>
-      
-          <label class='element' for="name"><b>Recipe Name</b></label>
-          <input class='element' id="name" type="text" name="name" placeholder="Enter Name">
-          <label class='element' for="description"><b>Recipe Description</b></label>
-          <textarea class='element' id="description" name="description" rows="4" cols="50" placeholder="Enter Description"></textarea>
-          <button type="button" class="btn" onclick="create()">Create</button>
-          <button type="button" class="cancel" onclick="closeForm()">Close</button>
+            <h1 class='element'>Add New Recipe</h1>
+
+            <label class='element' for="name"><b>Recipe Name</b></label>
+            <input class='element' id="name" type="text" name="name" placeholder="Enter Name">
+            <label class='element' for="description"><b>Recipe Description</b></label>
+            <textarea class='element' id="description" name="description" rows="4" cols="50"
+                placeholder="Enter Description"></textarea>
+
+            <!-- Add a new input field for ingredients with quantities -->
+            <label class='element' for="ingredients"><b>Ingredients (Ingredient: Quantity, Ingredient: Quantity)</label>
+            <input class='element' id="ingredients" type="text" name="ingredients"
+                placeholder="Enter Ingredients and Quantities (e.g., Ingredient1: Quantity1, Ingredient2: Quantity2)">
+
+            <button type="button" class="btn" onclick="createRecipe()">Create</button>
+            <button type="button" class="cancel" onclick="closeForm()">Close</button>
         </form>
-      </div> 
+    </div>
     <div id="recipeContainer"></div>
 
     <div class="navbar">
@@ -38,22 +45,40 @@
         function newRecipe() {
             document.getElementById("myForm").style.display = "block";
         }
+
         function closeForm() {
             document.getElementById("myForm").style.display = "none";
         }
 
-        function openRecipe() {
-            
-        }
+        function createRecipe() {
+            var name = document.getElementById("name").value;
+            var description = document.getElementById("description").value;
+            var ingredientsInput = document.getElementById("ingredients").value;
 
-        function create() {
+            // Check if any of the required fields are empty
+            if (!name || !description || !ingredientsInput) {
+                alert("Please fill in all the required fields.");
+                return;
+            }
+
+            // Check if ingredients input has the correct format
+            var ingredientsList = ingredientsInput.split(',');
+            for (var i = 0; i < ingredientsList.length; i++) {
+                if (ingredientsList[i].trim().split(':').length !== 2) {
+                    alert("Ingredients format is incorrect. Please use 'Ingredient: Quantity' format.");
+                    return;
+                }
+            }
+
+            // If all checks pass, proceed with creating the recipe
             var data = localStorage.getItem('recipeList');
-            var list = new Set(); 
-            if(data == null) {
+            var list = new Set();
+            if (data == null) {
                 localStorage.setItem("recipeList", JSON.stringify([]));
             } else {
                 list = new Set(JSON.parse(data));
             }
+
             var recipeContainer = document.createElement("div");
             recipeContainer.id = "recipe";
 
@@ -61,47 +86,62 @@
             descriptionContainer.className = "description-text";
 
             var descriptionTextContainer = document.createElement("div");
-            descriptionTextContainer.className = "recipe-text";
-            descriptionTextContainer.textContent = document.getElementById("description").value;
-            var set = new Set();     
-            set.add(document.getElementById("description").value);
-            console.log(set);
-            localStorage.setItem(document.getElementById("name").value, JSON.stringify(Array.from(set))); 
+            descriptionTextContainer.className = "recipe-text user-input";
+            descriptionTextContainer.textContent = description;
+
+            var ingr = document.createElement("ul");
+            ingr.setAttribute("id", "ing");
+
+            for (var i = 0; i < ingredientsList.length; i++) {
+                var ingredientInfo = ingredientsList[i].split(':');
+                var ingredientName = ingredientInfo[0].trim();
+                var ingredientQuantity = ingredientInfo[1].trim();
+
+                var li = document.createElement('li');
+                li.appendChild(document.createTextNode(ingredientName + ': ' + ingredientQuantity));
+                ingr.appendChild(li);
+            }
+
+            descriptionContainer.append(ingr);
+            localStorage.setItem(name + "_ingredients", JSON.stringify(ingredientsList));
 
             var textContainer = document.createElement("div");
-
             textContainer.className = "text-container";
 
-            // Create the recipe text div with class "recipe-text"
             var recipeText = document.createElement("div");
             recipeText.className = "recipe-text";
-            recipeText.textContent = document.getElementById("name").value;
-            list.add(document.getElementById("name").value);
+            recipeText.textContent = name;
+            list.add(name);
             localStorage.setItem("recipeList", JSON.stringify(Array.from(list)));
 
             var span = document.createElement("SPAN");
             var txt = document.createTextNode("\u00D7");
             span.className = "close";
             span.appendChild(txt);
-            span.onclick = function() {
-                var listItem = this.parentElement.parentElement.parentElement; 
+            span.onclick = function () {
+                var listItem = this.parentElement.parentElement.parentElement;
+                list.delete(name);
+                localStorage.setItem("recipeList", JSON.stringify(Array.from(list)));
+                localStorage.removeItem(name + "_ingredients");
                 listItem.remove();
             };
             recipeText.appendChild(span);
 
-            // Append the elements to the appropriate containers
             descriptionContainer.append(descriptionTextContainer);
             textContainer.appendChild(recipeText);
             recipeContainer.appendChild(textContainer);
             recipeContainer.appendChild(descriptionContainer);
             recipeContainer.addEventListener("click", () => {
-                // Toggle the visibility of the two containers
                 textContainer.classList.toggle("remove");
                 descriptionContainer.classList.toggle("show");
             });
             document.getElementById("recipeContainer").appendChild(recipeContainer);
+            document.getElementById("description").value = "";
+            document.getElementById("name").value = "";
+            document.getElementById("ingredients").value = "";
             closeForm();
-
         }
     </script>
 </body>
+
+</html>
