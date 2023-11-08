@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>CMSC434 Phase 1.2</title>
+    <link rel="stylesheet" href="recipeList.css" />
+</head>
+
+<body>
+    <div id="header">
+        <span style="vertical-align:middle">Recipes</span>
+    </div>
+        
+    <button onclick="newRecipe()" class="addRecipe">+ Add Recipe</button> 
+    <div class="form-popup" id="myForm">
+        <form class="form-container">
+          <h1 class= 'element'>Add New Recipe</h1>
+      
+          <label class='element' for="name"><b>Recipe Name</b></label>
+          <input class='element' id="name" type="text" name="name" placeholder="Enter Name">
+          <label class='element' for="description"><b>Recipe Description</b></label>
+          <textarea class='element' id="description" name="description" rows="4" cols="50" placeholder="Enter Description"></textarea>
+          <button type="button" class="btn" onclick="create()">Create</button>
+          <button type="button" class="cancel" onclick="closeForm()">Close</button>
+        </form>
+      </div> 
+    <div id="recipeContainer"></div>
+
+    <div class="navbar">
+            <button><img src="basic_home.png" width="100" height="100"></button>
+            <button><img src="fridge.png" width="100" height="100"></button>
+            <button><img src="ecommerce_cart.png" width="100" height="100"></button>
+            <button><img src="chef.png" width="100" height="100"></button>
+            <button><img src="community.png" width="100" height="100"></button>
+    </div>
+
+    <script>
+        function newRecipe() {
+            document.getElementById("myForm").style.display = "block";
+        }
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+        }
+
+        function openRecipe() {
+            
+        }
+
+        function create() {
+            var recipeContainer = document.createElement("div");
+            recipeContainer.id = "recipe";
+
+            var descriptionContainer = document.createElement("div");
+            descriptionContainer.className = "description-text";
+
+            var descriptionTextContainer = document.createElement("div");
+            descriptionTextContainer.className = "recipe-text";
+            descriptionTextContainer.textContent = document.getElementById("description").value;
+
+
+            var textContainer = document.createElement("div");
+
+            textContainer.className = "text-container";
+
+            // Create the recipe text div with class "recipe-text"
+            var recipeText = document.createElement("div");
+            recipeText.className = "recipe-text";
+            recipeText.textContent = document.getElementById("name").value;
+
+            var span = document.createElement("SPAN");
+            var txt = document.createTextNode("\u00D7");
+            span.className = "close";
+            span.appendChild(txt);
+            span.onclick = function() {
+                var listItem = this.parentElement.parentElement.parentElement; 
+                listItem.remove();
+            };
+            recipeText.appendChild(span);
+
+            // Append the elements to the appropriate containers
+            descriptionContainer.append(descriptionTextContainer);
+            textContainer.appendChild(recipeText);
+            recipeContainer.appendChild(textContainer);
+            recipeContainer.appendChild(descriptionContainer);
+            recipeContainer.addEventListener("click", () => {
+                // Toggle the visibility of the two containers
+                textContainer.classList.toggle("remove");
+                descriptionContainer.classList.toggle("show");
+            });
+            document.getElementById("recipeContainer").appendChild(recipeContainer);
+            closeForm();
+
+        }
+    </script>
+</body>
