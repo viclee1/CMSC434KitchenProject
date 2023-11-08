@@ -10,76 +10,24 @@
 
 <body>
 
-    <div id="Home" class="tabcontent">
-        <div id="header">
-            <img id="headerimg" style="vertical-align:middle" src="https://cdn3.iconfinder.com/data/icons/users-outline/60/50_-Blank_Profile-_user_people_group_team-512.png" height="150" width="150">
-            <span style="vertical-align:middle">Hello, [Name]</span>
-        </div>
-
-        <div class="widget">
-            <div class="widgetcolor">
-                <p>Kitchen Inventory</p>
-            </div>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <div class="widgetcolor">
-                <p>+ Add Item</p>
-            </div>
-        </div>
-
-        <br>
-
-        <div style="display:flex;">
-
-            <div class="halfwid1">
-                <div class="widgetcolor">
-                    <p>Meals for Today</p>
-                </div>
-                <br><br><br><br><br><br>
-                <div class="widgetcolor">
-                    <p>+ Add Item</p>
-                </div>
-            </div>
-        
-            <div style="flex: 2%;"></div>
-
-            <div class="halfwid2">
-                <div class="widgetcolor">
-                    <p>Shopping List</p>
-                </div>
-                <br><br><br><br><br><br>
-                <div class="widgetcolor" style="bottom:0">
-                    <p>+ Add Item</p>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
     <div id="Profiles" class="tabcontent" style="display: none;">
-        <div id="header">
+        <div class="header">
             <span style="vertical-align:middle">Profiles</span>
             <button style="float: right;padding: 10px;
             border-radius: 10px;
             -moz-border-radius: 10px;
             -webkit-border-radius: 10px;
             margin:10px;width: 200px;
-        height: 80px; font-size: 30px;">Add User</button>
+            height: 80px; font-size: 30px;" onClick="openPage(event, 'AddUser')">Add User</button>
         </div>
 
         <div class="user">
             <div style="padding:10px">
                 <p class="userHeader">Steve</p>
                 <br>
-                <img src="guy1.jpg" width="200" height="200">
+                <img src="guy1.jpg" width="300" height="300">
                 <br>
-                <button style="width: 200px;height: 40px; font-size: 20px;">Delete User</button>
+                <button class="deleteUser">Delete User</button>
             </div>
             <div style="padding:10px">
                 <p class="userHeader">Allergies</p>
@@ -93,9 +41,9 @@
             <div style="padding:10px">
                 <p class="userHeader">Jacob</p>
                 <br>
-                <img src="guy2.jpeg" width="200" height="200">
+                <img src="guy2.jpeg" width="300" height="300">
                 <br>
-                <button style="width: 200px;height: 40px; font-size: 20px;">Delete User</button>
+                <button class="deleteUser">Delete User</button>
             </div>
             <div style="padding:10px">
                 <p class="userHeader">Allergies</p>
@@ -109,9 +57,9 @@
             <div style="padding:10px">
                 <p class="userHeader">James</p>
                 <br>
-                <img src="guy3.jpeg" width="200" height="200">
+                <img src="guy3.jpeg" width="300" height="300">
                 <br>
-                <button style="width: 200px;height: 40px; font-size: 20px;">Delete User</button>
+                <button class="deleteUser">Delete User</button>
             </div>
             <div style="padding:10px">
                 <p class="userHeader">Allergies</p>
@@ -122,12 +70,41 @@
         </div>
     </div>
 
+    <div id="AddUser" class="tabcontent" style="display: none;">
+        <div class="header">
+            <span style="vertical-align:middle">Add User</span>
+        </div>
+        <form>
+            <div class="userForm">
+                <div>
+                    <label for="name">Name:</label>
+                    <br>
+                    <label for="pfp">Picture:</label>
+                    <br>
+                    <label for="allergies">Allergies:</label>
+                </div>
+            
+                <div>
+                    <input type="text" placeholder="Enter User Name" name="name"  required>
+                    <br>
+                    <input type="image">
+                    <br>
+                    <textarea type="text" placeholder="If no allergies, enter 'NONE'" required></textarea>
+                </div>
+            </div>
+            <br>
+            <div style="text-align: center;">
+                <input type="submit" value="Add User">
+            </div>
+            
+        </form>
+    </div>
+
     <div class="navbar">
-        <img src="basic_home.png" width="100" height="100" onClick="openPage(event, 'Home')">
-        <img src="fridge.png" width="100" height="100" onClick="openPage(event, 'Kitchen')">
-        <img src="ecommerce_cart.png" width="100" height="100" onClick="openPage(event, 'Shopping')">
-        <img src="chef.png" width="100" height="100" onClick="openPage(event, 'Recipies')">
-        <img src="community.png" width="100" height="100" onClick="openPage(event, 'Profiles')">
+        <img src="fridge.png" width="150" height="150" onClick="openPage(event, 'Kitchen')">
+        <img src="ecommerce_cart.png" width="150" height="150" onClick="openPage(event, 'Shopping')">
+        <img src="chef.png" width="150" height="150" onClick="openPage(event, 'Recipies')">
+        <img src="community.png" width="150" height="150" onClick="openPage(event, 'Profiles')">
     </div>
 
 </body>
