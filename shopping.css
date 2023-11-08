@@ -85,8 +85,6 @@ body {
     justify-content: center;
 }
 
-<<<<<<< Updated upstream
-=======
 .left-half {
     width: 50%;
     display: flex;
@@ -155,7 +153,6 @@ label {
 table {
     width: 100%;
 }
->>>>>>> Stashed changes
 
 th {
     border: #A7C7E7;
