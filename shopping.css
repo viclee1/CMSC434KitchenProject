@@ -11,6 +11,7 @@ body {
     position: fixed;
     bottom: 0;
     width: 100%;
+    padding: 10px;
 }
 
 .navbar img {
@@ -19,6 +20,7 @@ body {
     text-align: center;
     padding: 14px 45px;
 }
+
 #header {
     font-size: 4rem;
     padding: 15px;
