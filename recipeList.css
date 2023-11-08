@@ -78,21 +78,20 @@ body {
 
 
 .navbar {
-    background-color: #A7C7E7;
-    overflow: hidden;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+  background-color: #A7C7E7;
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 10px;
 }
 
-.navbar button {
-    background-color: #A7C7E7;
-    float: left;
-    display: block;
-    text-align: center;
-    padding: 14px 45px;
+.navbar img {
+  float: left;
+  display: block;
+  text-align: center;
+  padding: 14px 45px;
 }
-
 
 .form-popup {
     margin-right: auto;
