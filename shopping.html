@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>CMSC434 Checkpoint Phase</title>
+    <link rel="stylesheet" href="shopping.css" />
+</head>
+
+<body>
+
+
+    <div id="header" class="flex-container">
+        <span style="vertical-align:middle">Shopping List</span>
+        <button class="widgetcolor" id="add-item" onclick="addItemLink()">+ Add Item</button>
+    </div>
+
+    <div id="pop-up">
+        <div id="pop-up-prompt">Type in the name of your item</div>
+        <input type="text" id="name-input" name="nameInput">
+        <div id="pop-up-buttons">
+            <button type="button" class="p-buttons" onclick="closeAddItemMenu()">Exit</button>
+            <button type="button" class="p-buttons" onclick="addItem()">Add Item</button>
+        </div>
+    </div>
+
+    <div id="shopping-list">
+    </div>
+
+    <br>
+
+    <div class="navbar">
+        <a href="kitchenInventory.html"><img src="fridge.png" width="150" height="150"></a>
+        <a href="shopping.html"><img src="ecommerce_cart.png" width="150" height="150"></a>
+        <a href="recipeList.html"><img src="chef.png" width="150" height="150"></a>
+        <a href="mockup.html"><img src="community.png" width="150" height="150"></a>
+    </div>
+
+    <script>
+        
+        localStorage.setItem("groceries", JSON.stringify([])) 
+
+        let counter = 0
+
+        function addItemLink() {
+            let popUp = document.getElementById("pop-up")
+            popUp.style.visibility = "visible"
+        }
+
+        function closeAddItemMenu() {
+            let popUp = document.getElementById("pop-up")
+            popUp.style.visibility = "hidden"
+        }
+
+        function addItem() {
+
+            let groceries = JSON.parse(localStorage.getItem("groceries"))
+            let input = document.getElementById("name-input")
+            let parent = document.getElementById("shopping-list")
+            let newElem = document.createElement("div")
+            let leftHalf = document.createElement("div")
+            let rightHalf = document.createElement("div")
+            let popUp = document.getElementById("pop-up")
+            let labelID = "label" + counter
+            let leftName = "left" + counter
+            let rightName = "right" + counter
+            let leftStr = "<input type=\"checkbox\" id=\"" + counter + "\"> <label for=\"" + counter + "m\" contentEditable=\"true\" id=labelID>" + input.value + "</label>"
+            let rightStr1 = "<span class=\"float-right\">[NOTES]</span>"
+            let rightStr2 = "<span type=\"button\" class=\"float-right\" onclick=\"deleteItem(this.parentNode.parentNode.id)\">X</span>"
+
+            groceries.push(input.value)
+            localStorage.setItem("groceries", JSON.stringify(groceries)) 
+
+            newElem.id = "listItem" + counter
+            newElem.innerHTML += "<div id=\"" + leftName + "\" class=\"left-half\">" + leftStr + "</div>"
+            newElem.innerHTML += "<div id=\"" + rightName + "\" class=\"right-half\">" + rightStr1 + rightStr2 + "</div>"
+            counter += 1
+
+            input.value = ""
+
+            newElem.classList.add("widgetcolor")
+            newElem.classList.add("header")
+            newElem.classList.add("list-item")
+            parent.appendChild(newElem)
+            popUp.style.visibility = "hidden"
+        }
+        
+        function deleteItem(id) {
+            // let groceries = JSON.parse(localStorage.getItem("groceries"))
+
+            currElem = document.getElementById(id)
+            currElem.parentNode.removeChild(currElem)
+
+            // groceries = groceries.filter(item => item !== value)
+            // localStorage.setItem("groceries", JSON.stringify(groceries)) 
+        }
+    </script>
+
+</body>
