@@ -57,7 +57,10 @@
             var descriptionTextContainer = document.createElement("div");
             descriptionTextContainer.className = "recipe-text";
             descriptionTextContainer.textContent = document.getElementById("description").value;
-
+            var set = new Set();     
+            set.add(document.getElementById("description").value);
+            console.log(set);
+            localStorage.setItem(document.getElementById("name").value, JSON.stringify(Array.from(set))); 
 
             var textContainer = document.createElement("div");
 
