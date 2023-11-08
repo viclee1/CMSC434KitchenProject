@@ -48,6 +48,13 @@
         }
 
         function create() {
+            var data = localStorage.getItem('recipeList');
+            var list = new Set(); 
+            if(data == null) {
+                localStorage.setItem("recipeList", JSON.stringify([]));
+            } else {
+                list = new Set(JSON.parse(data));
+            }
             var recipeContainer = document.createElement("div");
             recipeContainer.id = "recipe";
 
@@ -70,6 +77,8 @@
             var recipeText = document.createElement("div");
             recipeText.className = "recipe-text";
             recipeText.textContent = document.getElementById("name").value;
+            list.add(document.getElementById("name").value);
+            localStorage.setItem("recipeList", JSON.stringify(Array.from(list)));
 
             var span = document.createElement("SPAN");
             var txt = document.createTextNode("\u00D7");
