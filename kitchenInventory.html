@@ -4,43 +4,108 @@
 <head>
     <meta charset="utf-8" />
     <title>Kitchen Inventory</title>
-    <link rel="stylesheet" href="kitchenInventory.css" />
+    <link rel="stylesheet" href="shopping.css" />
 </head>
 
 <body>
-    <div><p class="title">Kitchen Inventory <button class="left">+ Add Item</button></p></div>
-    <div><p class="sub">Filter By <select></select> Order By <select></select></p></div>
-    <table>
-        <tbody>
-            <tr id="outline">
-                <tr>
-                    <td id="imgRow" rowspan="2"><img src="ramen.jpeg" width="100" height="100"></td>
-                    <td>Ramen</td>
-                </tr>
-                <tr>
-                    <td><label for="quantity">QTY</label><input type="number" id="quantity" name="quantity" min="1" style="width: 20px;">
-                        <label for="exp">Expires</label><input type="date" id="exp" name="exp"></td>
-                </tr>
-            </tr>
+    <div><h1>Kitchen Inventory <button id="add-item" onclick="addItemLink()">+ Add Item</button></h1></div>
+    <div><h2>Filter By <select></select> Order By <select></select></h2></div> <!-- not functional -->
 
-            <tr id="outline">
-                <tr>
-                    <td id="imgRow" rowspan="2"><img src="cereal.jpeg" width="100" height="100"></td>
-                    <td>Cereal</td>
-                </tr>
-                <tr>
-                    <td><label for="quantity">QTY</label><input type="number" id="quantity" name="quantity" min="1" style="width: 20px;">
-                        <label for="exp">Expires</label><input type="date" id="exp" name="exp"></td>
-                </tr>
-            </tr>
-        </tbody>
-    </table>
+    <div id="pop-up">
+        <div class="pop-up-prompt">Type in the name of your item</div>
+        <input type="text" id="name-input" name="nameInput">
+
+        <div class="pop-up-prompt">How many?</div>
+        <input type="number" id="qty-input" name="qtyInput">
+
+        <div class="pop-up-prompt">Who owns this?</div>
+        <label for="owner">
+            <select id="owner-input" name="owner-input">
+                
+            </select>
+        </label>
+        
+        <div id="pop-up-buttons">
+            <button type="button" class="p-buttons" onclick="closeAddItemMenu()">Exit</button>
+            <button type="button" class="p-buttons" onclick="addItem()">Add Item</button>
+        </div>
+    </div>
+    <div id="shopping-list"></div>
 
     <div class="navbar">
-        <button><img src="basic_home.png" width="100" height="100"></button>
         <button><img src="fridge.png" width="100" height="100"></button>
         <button><img src="ecommerce_cart.png" width="100" height="100"></button>
         <button><img src="chef.png" width="100" height="100"></button>
         <button><img src="community.png" width="100" height="100"></button>
     </div>
+
+    <script>
+
+        localStorage.setItem("groceries", JSON.stringify([]))
+
+        let counter = 0
+
+        function addItemLink() {
+            let popUp = document.getElementById("pop-up")
+            popUp.style.visibility = "visible"
+        }
+
+        function closeAddItemMenu() {
+            let popUp = document.getElementById("pop-up")
+            popUp.style.visibility = "hidden"
+        }
+
+        function addItem() {
+
+            let inv = JSON.parse(localStorage.getItem("groceries"))
+            let nameIn = document.getElementById("name-input")
+            let qtyIn = document.getElementById("qty-input")
+            let ownIn = document.getElementById("owner-input")
+
+            let groceries = JSON.parse(localStorage.getItem("groceries"))
+            let parent = document.getElementById("shopping-list")
+
+            let newElem = document.createElement("div")
+            let leftHalf = document.createElement("div")
+            let rightHalf = document.createElement("div")
+            let popUp = document.getElementById("pop-up")
+            let labelID = "label" + counter
+            let leftName = "left" + counter
+            let rightName = "right" + counter
+            let leftStr = "<input type=\"checkbox\" id=\"" + counter + "\"> <label for=\"" + counter + "m\" contentEditable=\"true\" id=labelID>" + name.value + "</label>"
+            let qty = "<input type=\"number\" value=\"" + qtyIn.value + ">"
+            let owner = ownIn.value
+            let rightStr1 = "<span class=\"float-right\">[NOTES]</span>"
+            let rightStr2 = "<span type=\"button\" class=\"float-right\" onclick=\"deleteItem(this.parentNode.parentNode.id)\">X</span>" 
+
+            groceries.push(input.value)
+            localStorage.setItem("groceries", JSON.stringify(groceries))
+
+            newElem.id = "listItem" + counter
+            newElem.innerHTML += "<div id=\"" + leftName + "\" class=\"left-half\">" + leftStr + "</div>"
+            newElem.innerHTML += "<div id=\"" + leftName + "\" class=\"left-half\">" + "Qty" + qty + "</div>"
+            newElem.innerHTML += "<div id=\"" + leftName + "\" class=\"left-half\">" + "Owner: " + owner + "</div>"
+            newElem.innerHTML += "<div id=\"" + rightName + "\" class=\"right-half\">" + rightStr1 + rightStr2 + "</div>"
+            counter += 1
+
+            input.value = ""
+
+            newElem.classList.add("widgetcolor")
+            newElem.classList.add("header")
+            newElem.classList.add("list-item")
+            parent.appendChild(newElem)
+            popUp.style.visibility = "hidden"
+        }
+
+        function deleteItem(id) {
+            // let groceries = JSON.parse(localStorage.getItem("groceries"))
+
+            currElem = document.getElementById(id)
+            currElem.parentNode.removeChild(currElem)
+
+            // groceries = groceries.filter(item => item !== value)
+            // localStorage.setItem("groceries", JSON.stringify(groceries))
+        }
+    </script>
+
 </body>

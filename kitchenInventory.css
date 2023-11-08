@@ -1,12 +1,13 @@
-.title {
-    font-size: 60px;
+* {
+    font-family: monaco,Consolas,Lucida Console,monospace;;
 }
 
-.sub {
-    font-size: 25px;
+body {
+    background-color: #faeee7;
 }
+
 .navbar {
-    background-color: #ff8ba7;
+    background-color: #A7C7E7;
     overflow: hidden;
     position: fixed;
     bottom: 0;
@@ -14,7 +15,7 @@
 }
 
 .navbar button {
-    background-color: #ff8ba7;
+    background-color: #A7C7E7;
     float: left;
     display: block;
     text-align: center;
@@ -26,6 +27,7 @@
     right: 0;
     height: 50px;
     width: 100px;
+    font-size: 35px;
 }
 
 #imgRow {
@@ -37,14 +39,77 @@ table {
 }
 
 th {
-    border: #ff8ba7;
+    border: #A7C7E7;
 }
 
 tr {
-    background-color: #ff8ba7;
+    background-color: #A7C7E7;
 }
 
 #outline {
     outline: thin solid;
-    background-color: #ff8ba7;
+    background-color: #A7C7E7;
+}
+
+#inv {
+    font-size: 1.5rem;
+}
+
+.p-buttons {
+    width: 14rem;
+    height: 9rem;
+    font-size: 3rem;
+}
+
+#pop-up {
+    position: fixed;
+    height: 50rem;
+    width: 40rem;
+    top: 25%;
+    left: 15.4%;
+    background-color: #A7C7E7;
+    border-color: #fffffe;
+    border-width: 1rem;
+    border-style: solid;
+    border-radius: 2rem;
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.pop-up-prompt {
+    font-size: 3rem;
+    text-align: center;
+    margin-top: 6rem;
+}
+
+#pop-up-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 8rem;
+}
+
+#header {
+    font-size: 4rem;
+    padding: 15px;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+.widget {
+    background-color: #fffffe;
+    font-size: 2rem;
+}
+
+.widgetcolor {
+    background-color: #A7C7E7;
+    padding:8px;
+}
+
+.button {
+    background-color: #A7C7E7;
+    height: 3.4rem;
+    width: 10rem;
+    float: right;
+    display: flex;
+    justify-content: center;
 }

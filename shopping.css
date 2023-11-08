@@ -85,5 +85,83 @@ body {
     justify-content: center;
 }
 
+<<<<<<< Updated upstream
+=======
+.left-half {
+    width: 50%;
+    display: flex;
+}
 
+.right-half {
+    width: 50%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.p-buttons {
+    width: 14rem;
+    height: 9rem;
+    font-size: 3rem;
+}
+
+#pop-up {
+    position: fixed;
+    height: 50rem;
+    width: 40rem;
+    top: 25%;
+    left: 15.4%;
+    background-color: #A7C7E7;
+    border-color: #fffffe;
+    border-width: 1rem;
+    border-style: solid;
+    border-radius: 2rem;
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#pop-up-prompt {
+    font-size: 3rem;
+    text-align: center;
+    margin-top: 6rem;
+}
+
+#pop-up-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 8rem;
+}
+
+#name-input {
+    height: 6rem;
+    margin-top: 6.5rem;
+    font-size: 3rem;
+    width: 93.5%;
+}
+
+input {
+    margin-left: 1rem;
+    margin-right: 2rem;
+}
+
+input[type="checkbox"] {
+    width: 80px;
+}
+
+label {
+    overflow: auto;
+}
+
+table {
+    width: 100%;
+}
+>>>>>>> Stashed changes
+
+th {
+    border: #A7C7E7;
+}
+
+tr {
+    background-color: #A7C7E7;
+}
 
