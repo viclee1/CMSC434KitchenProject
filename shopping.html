@@ -31,7 +31,7 @@
         </div>
         <div id="pop-up-buttons-single" class="pop-up-buttons pop-up-menu">
             <button type="button" class="p-buttons" onclick="closeAddItemMenu(0)">Exit</button>
-            <button type="button" class="p-buttons" onclick="addItem(0)">Add Item</button>
+            <button type="button" id="add-item-0" class="p-buttons" onclick="addItem(0)">Add Item</button>
         </div>
     </div>
 
@@ -44,7 +44,7 @@
         </div>
         <div class="pop-up-buttons pop-up-menu">
             <button type="button" class="p-buttons" onclick="closeAddItemMenu(1)">Exit</button>
-            <button type="button" class="p-buttons" onclick="addItem(1)">Add Items</button>
+            <button type="button" id="add-item-1" class="p-buttons" onclick="addItem(1)">Add Items</button>
         </div>
     </div>
 
@@ -95,12 +95,17 @@
                 let newOptions = selectMenu.options
                 let spreadOptions = [...newOptions]
                 let options = spreadOptions.map(option => option.value)
-                console.log(options)
+
                 //add recipes to the options of the select element
 
-                if(recipeList !== null && recipeList.length > 1) {
+                console.log(recipeList)
+                console.log("meowww")
+                if(recipeList != null && recipeList.length > 0) {
+                    console.log("whoaaaaa")
                     for (let i = 0; i < recipeList.length; i++) {
+                        console.log("hiya")
                         if(!options.includes(recipeList[i])) {
+                            console.log("whoa")
                             let option = document.createElement("option")
                             option.value = recipeList[i]
                             option.innerHTML = recipeList[i]
@@ -117,6 +122,7 @@
         function closeAddItemMenu(id) {
             if (id == 0) {
                 let popUp = document.getElementById("pop-up")
+                let input = document.getElementById("name-input").value = ""
                 popUp.style.visibility = "hidden"
             } else {
                 let popUp = document.getElementById("pop-up-recipe")
@@ -141,37 +147,40 @@
                 //get element and quantity
                 let item = document.getElementById("name-input").value.toLowerCase().trim()
                 let quantity = document.getElementById("quantity-pop-up").value
-                //if the item is already in list, just increment the number. otherwise, call addItemAux()
-                if(document.getElementById(item + "Item")) {
-                    document.getElementById(item + "Quantity").value = parseInt(document.getElementById(item + "Quantity").value) + parseInt(quantity)
-                    document.getElementById("pop-up").style.visibility = "hidden"
-                    let groceries = JSON.parse(localStorage.getItem("groceries"))
-                    for(let i = 0; i < groceries.length; i++) {
-                        if(groceries[i][0] == item) {
-                            let newQuantity = parseInt(groceries[i][2]) + parseInt(quantity)
-                            groceries[i][2] = newQuantity
+                if((item === "") == false) {
+                    //if the item is already in list, just increment the number. otherwise, call addItemAux()
+                    if(document.getElementById(item + "Item")) {
+                        document.getElementById(item + "Quantity").value = parseInt(document.getElementById(item + "Quantity").value) + parseInt(quantity)
+                        document.getElementById("pop-up").style.visibility = "hidden"
+                        let groceries = JSON.parse(localStorage.getItem("groceries"))
+                        for(let i = 0; i < groceries.length; i++) {
+                            if(groceries[i][0] == item) {
+                                let newQuantity = parseInt(groceries[i][2]) + parseInt(quantity)
+                                groceries[i][2] = newQuantity
+                            }
                         }
+                        localStorage.setItem("groceries", JSON.stringify(groceries)) 
+                    } else {
+                        addItemAux(document.getElementById("name-input").value, quantity, 0)
                     }
-                    localStorage.setItem("groceries", JSON.stringify(groceries)) 
-                } else {
-                    addItemAux(document.getElementById("name-input").value, quantity, 0)
                 }
             } else {
                 let ingredListStr = document.getElementById("selector").value + "_ingredients"
                 let ingredList = JSON.parse(localStorage.getItem(ingredListStr))
 
-                //traverse through the ingredient list of the curent recipe and add each ingredient one by one
-                for (let i = 0; i < ingredList.length; i++) {
-                    let ingredParse = ingredList[i].split(":")
-                    ingred = ingredParse[0].toLowerCase().trim()
-                    let quantity = ingredParse[1]
-                    //if the item is already in list, just increment the number. otherwise, call addItemAux()
-                    if(document.getElementById(ingred + "Item")) {
-                        document.getElementById(ingred + "Quantity").value = parseInt(document.getElementById(ingred + "Quantity").value) + parseInt(quantity)
-                        document.getElementById("pop-up-recipe").style.visibility = "hidden"
-                        
-                    } else {
-                        addItemAux(ingred, quantity, 1)
+                if(ingredList) {
+                    //traverse through the ingredient list of the curent recipe and add each ingredient one by one
+                    for (let i = 0; i < ingredList.length; i++) {
+                        let ingredParse = ingredList[i].split(":")
+                        ingred = ingredParse[0].toLowerCase().trim()
+                        let quantity = ingredParse[1]
+                        //if the item is already in list, just increment the number. otherwise, call addItemAux()
+                        if(document.getElementById(ingred + "Item")) {
+                            document.getElementById(ingred + "Quantity").value = parseInt(document.getElementById(ingred + "Quantity").value) + parseInt(quantity)
+                            document.getElementById("pop-up-recipe").style.visibility = "hidden"
+                        } else {
+                            addItemAux(ingred, quantity, 1)
+                        }
                     }
                 }
             }
