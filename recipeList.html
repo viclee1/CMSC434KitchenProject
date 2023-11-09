@@ -17,7 +17,7 @@
         <div id="pop-up-prompt">Add New Recipe</div>
         <label class='element' for="name"><b>Recipe Name</b></label>
         <input class='element' id="name" type="text" name="name" placeholder="Enter Name">
-        <label class='element' for="description"><b>Recipe Description</b></label>
+        <label class='element' for="description"><b>Recipe Instruction</b></label>
         <textarea class='element' id="description" name="description" rows="4" cols="50"
                 placeholder="Enter Description"></textarea>
 
@@ -92,15 +92,37 @@
 
             var ingr = document.createElement("ul");
             ingr.setAttribute("id", "ing");
-
+            var temp = new Set();
             for (var i = 0; i < ingredientsList.length; i++) {
                 var ingredientInfo = ingredientsList[i].split(':');
                 var ingredientName = ingredientInfo[0].trim();
+                temp.add(ingredientName);
                 var ingredientQuantity = ingredientInfo[1].trim();
 
                 var li = document.createElement('li');
                 li.appendChild(document.createTextNode(ingredientName + ': ' + ingredientQuantity));
                 ingr.appendChild(li);
+            }
+            var people = new Set(JSON.parse(localStorage.getItem('userList')));
+            var allg = document.createElement("ul");
+            allg.setAttribute("id", "allg");
+            for (const i of people) {
+                var li = document.createElement('li');
+                var al = i + " may be allergic to:";
+                var j = new Set(JSON.parse(localStorage.getItem(i +"_allergies")));
+                var t = new Set();
+                for(const m of j) {
+                    if(temp.has(m)) {
+                        t.add(m)
+                    }
+                }
+                if (t.size > 0) {
+                    for (const z of t) {
+                        al = al + " "+ z;
+                    }
+                    li.appendChild(document.createTextNode(al));
+                    allg.appendChild(li);
+                }
             }
 
             descriptionContainer.append(ingr);
@@ -129,6 +151,7 @@
             recipeText.appendChild(span);
 
             descriptionContainer.append(descriptionTextContainer);
+            descriptionContainer.append(allg);
             textContainer.appendChild(recipeText);
             recipeContainer.appendChild(textContainer);
             recipeContainer.appendChild(descriptionContainer);
