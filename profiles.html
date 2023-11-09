@@ -19,6 +19,7 @@
             <div class="pop-up-prompt">Enter User Name</div>
             <input type="text" id="name-input" class="inputBox" name="nameInput">
             <div class="pop-up-prompt">Enter User Allergies</div>
+            <div class="pop-up-prompt">(Allergy1, Allergy2, ...)</div>
             <input type="text" id="allergies-input" class="inputBox" name="allergies" placeholder="If none, enter 'NONE'">
             <div id="pop-up-buttons">
                 <button type="button" class="p-buttons" onclick="closeAddItemMenu()">Exit</button>
@@ -39,9 +40,6 @@
     </div>
 
     <script>
-        
-        localStorage.setItem("users", JSON.stringify([])) 
-
         let counter = 0
 
         function addItemLink() {
@@ -55,22 +53,39 @@
         }
 
         function addItem() {
+            // gets form data
+            let nameInput = document.getElementById("name-input").value
+            let allerInput = document.getElementById("allergies-input").value
 
-            let users = JSON.parse(localStorage.getItem("users"))
-            let nameInput = document.getElementById("name-input")
-            let allerInput = document.getElementById("allergies-input")
+            // checks if fields are empty
+            if(!nameInput || !allerInput) {
+                alert("Please fill in all the required fields.")
+                return
+            }
+
+            let allerList = allerInput.split(',')
+            let data = localStorage.getItem('userList')
+            let list = new Set()
+            if(data == null) {
+                localStorage.setItem("userList", JSON.stringify([]))
+            } else {
+                list = new Set(JSON.parse(data))
+            }
+
             let parent = document.getElementById("userList")
             let newElem = document.createElement("div")
             let popUp = document.getElementById("pop-up")
             let labelID = "label" + counter
             let leftName = "left" + counter
             let rightName = "right" + counter
-            let leftStr = "<p>" + nameInput.value + "</p>"
-            let rightStr1 = "<p class=\"float-right\">Allergies:" + allerInput.value + "</p>"
-            let rightStr2 = "<span type=\"button\" class=\"float-right\" onclick=\"deleteItem(this.parentNode.parentNode.id)\">X</span>"
+            let leftStr = "<p>" + nameInput + "</p>"
+            let rightStr1 = "<p class=\"float-right\">Allergies:" + allerInput + "</p>"
+            let rightStr2 = "<span id=\"" + nameInput + "\" type=\"button\" class=\"float-right\" onclick=\"deleteItem(this.parentNode.parentNode.parentNode.id, this.id)\">X</span>"
 
-            users.push(nameInput.value)
-            localStorage.setItem("users", JSON.stringify(users)) 
+            list.add(nameInput)
+            localStorage.setItem("userList", JSON.stringify(Array.from(list)))
+
+            localStorage.setItem(nameInput + "_allergies", JSON.stringify(allerList))
 
             newElem.id = "listItem" + counter
             newElem.innerHTML += "<div id=\"" + leftName + "\" class=\"left-half\">" + leftStr + "</div>"
@@ -78,22 +93,23 @@
             newElem.innerHTML += "<div class=\"right-half\">" + rightStr2 + "</div>"
             counter += 1
 
-            nameInput.value = ""
-            allerInput.value = ""
+            nameInput = ""
+            allerInput = ""
 
             newElem.classList.add("user")
             parent.appendChild(newElem)
             popUp.style.visibility = "hidden"
         }
 
-        function deleteItem(id) {
-            // let groceries = JSON.parse(localStorage.getItem("groceries"))
-
+        function deleteItem(id, name) {
             currElem = document.getElementById(id)
             currElem.parentNode.removeChild(currElem)
 
-            // groceries = groceries.filter(item => item !== value)
-            // localStorage.setItem("groceries", JSON.stringify(groceries)) 
+            let data = localStorage.getItem('userList')
+            let list = new Set(JSON.parse(data))
+            list.delete(name)
+            localStorage.setItem("userList", JSON.stringify(Array.from(list)))
+            localStorage.removeItem(name+"_allergies")
         }
 
     </script>
