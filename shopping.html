@@ -182,8 +182,6 @@
             let input = document.getElementById("name-input")
             let parent = document.getElementById("shopping-list")
             let newElem = document.createElement("div")
-            let leftHalf = document.createElement("div")
-            let rightHalf = document.createElement("div")
             let popUp = id == 0 ? document.getElementById("pop-up") : document.getElementById("pop-up-recipe")
             let labelID = "label" + value
             let leftName = "left" + value
@@ -218,13 +216,14 @@
         }
         
         function deleteItem(id) {
-            // let groceries = JSON.parse(localStorage.getItem("groceries"))
+            let groceries = JSON.parse(localStorage.getItem("groceries"))
 
             currElem = document.getElementById(id)
+            currElemId = currElem.id.replace("Item", "")
             currElem.parentNode.removeChild(currElem)
 
-            // groceries = groceries.filter(item => item !== value)
-            // localStorage.setItem("groceries", JSON.stringify(groceries)) 
+            groceries = groceries.filter(item => item[0] != currElemId)
+            localStorage.setItem("groceries", JSON.stringify(groceries)) 
         }
     </script>
 
