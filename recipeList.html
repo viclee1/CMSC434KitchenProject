@@ -42,7 +42,6 @@
 
     <script>
         let recipeData = [];
-
         if (!localStorage.getItem("recipeListData")) {
             localStorage.setItem("recipeListData", JSON.stringify([]));
         } else {
@@ -72,7 +71,17 @@
                 alert("Please fill in all the required fields.");
                 return;
             }
-
+            var data = localStorage.getItem('recipeList');
+            var list = new Set();
+            if (data == null) {
+                localStorage.setItem("recipeList", JSON.stringify([]));
+            } else {
+                list = new Set(JSON.parse(data));
+            }
+            if (list.has(name)) {
+                alert("This recipe name already exists. ");
+                return;
+            }
             var ingredientsList = ingredientsInput.split(',');
             for (var i = 0; i < ingredientsList.length; i++) {
                 if (ingredientsList[i].trim().split(':').length !== 2) {
@@ -88,7 +97,6 @@
             });
 
             localStorage.setItem("recipeListData", JSON.stringify(recipeData));
-
             createRecipeElement({
                 name: name,
                 description: description,
@@ -164,14 +172,22 @@
             localStorage.setItem("recipeList", JSON.stringify(Array.from(list)));
 
             var span = document.createElement("SPAN");
-            var txt = document.createTextNode("\u00D7");
+            var txt = document.createTextNode("X");
             span.className = "close";
             span.appendChild(txt);
             span.onclick = function () {
                 var listItem = this.parentElement.parentElement.parentElement;
-                list.delete(recipe.name);
-                localStorage.setItem("recipeList", JSON.stringify(Array.from(list)));
+                bd = JSON.parse(localStorage.getItem('recipeList'));
+                const bad = bd.filter(function (r) {
+                    return r !== recipe.name;
+                });
+                localStorage.setItem("recipeList", JSON.stringify(bad));
                 localStorage.removeItem(recipe.name + "_ingredients");
+                rd = JSON.parse(localStorage.getItem("recipeListData"));
+                const bod = rd.filter(function (r) {
+                    return r.name !== recipe.name;
+                });
+                localStorage.setItem("recipeListData", JSON.stringify(bod));
                 listItem.remove();
             };
             recipeText.appendChild(span);
