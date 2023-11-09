@@ -41,7 +41,19 @@
     </div>
 
     <script>
-         function addItemLink() {
+        let recipeData = [];
+
+        if (!localStorage.getItem("recipeListData")) {
+            localStorage.setItem("recipeListData", JSON.stringify([]));
+        } else {
+            recipeData = JSON.parse(localStorage.getItem("recipeListData"));
+        }
+
+        for (let i = 0; i < recipeData.length; i++) {
+            createRecipeElement(recipeData[i]);
+        }
+
+        function addItemLink() {
             let popUp = document.getElementById("pop-up");
             popUp.style.visibility = "visible";
         }
@@ -56,13 +68,11 @@
             var description = document.getElementById("description").value;
             var ingredientsInput = document.getElementById("ingredients").value;
 
-            // Check if any of the required fields are empty
             if (!name || !description || !ingredientsInput) {
                 alert("Please fill in all the required fields.");
                 return;
             }
 
-            // Check if ingredients input has the correct format
             var ingredientsList = ingredientsInput.split(',');
             for (var i = 0; i < ingredientsList.length; i++) {
                 if (ingredientsList[i].trim().split(':').length !== 2) {
@@ -71,7 +81,26 @@
                 }
             }
 
-            // If all checks pass, proceed with creating the recipe
+            recipeData.push({
+                name: name,
+                description: description,
+                ingredients: ingredientsList,
+            });
+
+            localStorage.setItem("recipeListData", JSON.stringify(recipeData));
+
+            createRecipeElement({
+                name: name,
+                description: description,
+                ingredients: ingredientsList,
+            });
+
+            closeAddItemMenu();
+        }
+
+        function createRecipeElement(recipe) {
+            var recipeContainer = document.createElement("div");
+            recipeContainer.id = "recipe";
             var data = localStorage.getItem('recipeList');
             var list = new Set();
             if (data == null) {
@@ -79,22 +108,18 @@
             } else {
                 list = new Set(JSON.parse(data));
             }
-
-            var recipeContainer = document.createElement("div");
-            recipeContainer.id = "recipe";
-
             var descriptionContainer = document.createElement("div");
             descriptionContainer.className = "description-text";
 
             var descriptionTextContainer = document.createElement("div");
             descriptionTextContainer.className = "recipe-text user-input";
-            descriptionTextContainer.textContent = description;
+            descriptionTextContainer.textContent = recipe.description;
 
             var ingr = document.createElement("ul");
             ingr.setAttribute("id", "ing");
             var temp = new Set();
-            for (var i = 0; i < ingredientsList.length; i++) {
-                var ingredientInfo = ingredientsList[i].split(':');
+            for (var i = 0; i < recipe.ingredients.length; i++) {
+                var ingredientInfo = recipe.ingredients[i].split(':');
                 var ingredientName = ingredientInfo[0].trim();
                 temp.add(ingredientName);
                 var ingredientQuantity = ingredientInfo[1].trim();
@@ -111,6 +136,7 @@
                 var al = i + " may be allergic to:";
                 var j = new Set(JSON.parse(localStorage.getItem(i +"_allergies")));
                 var t = new Set();
+                console.log(j);
                 for(const m of j) {
                     if(temp.has(m)) {
                         t.add(m)
@@ -126,15 +152,15 @@
             }
 
             descriptionContainer.append(ingr);
-            localStorage.setItem(name + "_ingredients", JSON.stringify(ingredientsList));
+            localStorage.setItem(recipe.name + "_ingredients", JSON.stringify(recipe.ingredients));
 
             var textContainer = document.createElement("div");
             textContainer.className = "text-container";
 
             var recipeText = document.createElement("div");
             recipeText.className = "recipe-text";
-            recipeText.textContent = name;
-            list.add(name);
+            recipeText.textContent = recipe.name;
+            list.add(recipe.name);
             localStorage.setItem("recipeList", JSON.stringify(Array.from(list)));
 
             var span = document.createElement("SPAN");
@@ -143,9 +169,9 @@
             span.appendChild(txt);
             span.onclick = function () {
                 var listItem = this.parentElement.parentElement.parentElement;
-                list.delete(name);
+                list.delete(recipe.name);
                 localStorage.setItem("recipeList", JSON.stringify(Array.from(list)));
-                localStorage.removeItem(name + "_ingredients");
+                localStorage.removeItem(recipe.name + "_ingredients");
                 listItem.remove();
             };
             recipeText.appendChild(span);
@@ -163,8 +189,8 @@
             document.getElementById("description").value = "";
             document.getElementById("name").value = "";
             document.getElementById("ingredients").value = "";
-            closeAddItemMenu();
         }
+
     </script>
 </body>
 
