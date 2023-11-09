@@ -1,5 +1,5 @@
 * {
-    font-family: monaco,Consolas,Lucida Console,monospace;;
+    font-family: monaco,Consolas,Lucida Console,monospace;
 }
 body {
     background-color: #faeee7;
@@ -11,6 +11,7 @@ body {
     position: fixed;
     bottom: 0;
     width: 100%;
+    padding: 10px;
 }
 
 .navbar img {
@@ -19,13 +20,12 @@ body {
     text-align: center;
     padding: 14px 45px;
 }
+
 #header {
     font-size: 4rem;
-    padding:15px
-}
-.widget {
-    background-color: #fffffe;
-    font-size: 2rem;
+    padding: 15px;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
 }
 
 .widgetcolor {
@@ -33,17 +33,6 @@ body {
     padding:8px;
 }
 
-.halfwid1 {
-    background-color: #fffffe;
-    font-size: 2rem;
-    flex: 49%;
-}
-
-.halfwid2 {
-    background-color: #fffffe;
-    font-size: 2rem;
-    flex: 49%;
-}
 .content{
     background-color: #fffffe;
 }
@@ -59,21 +48,52 @@ body {
     flex-direction: row;
 }
 
-#add-item {
+.add-item {
     font-size: 2rem;
     margin-left: 13rem;
     text-align: center;
     padding-right: 1.1rem;
+    border-radius: 10px;
+}
+
+.dropdown-add {
+    position: fixed;
+    visibility: hidden;
+}
+
+#single-add {
+    top: 6%;
+    left: 53.2%;
+    width: 13.9rem;
+    background-color: #a7b2e7;
+}
+
+#recipe-add {
+    top: 11.5%;
+    left: 53.2%;
+    width: 13.9rem;
+    background-color: #a7b2e7;
 }
 
 #shopping-list {
     font-size: 1.5rem;
+    overflow: scroll;
+    height: 111rem;
 }
 
 .notes {
     font-size: 2rem;
     float: right;
     margin-top: 0.55rem;
+}
+
+.list-item {
+    display: flex;
+    flex-direction: row;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    border-radius: 1.7rem;
+    padding: 1rem;
 }
 
 .button {
@@ -99,10 +119,33 @@ body {
 .p-buttons {
     width: 14rem;
     height: 9rem;
-    font-size: 3rem;
+    font-size: 30px;
+    border-radius: 10px;
+    margin-top: 30px;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
 }
 
 #pop-up {
+    position: fixed;
+    height: 40rem;
+    width: 40rem;
+    top: 25%;
+    left: 15.4%;
+    background-color: #A7C7E7;
+    border-color: #fffffe;
+    border-width: 1rem;
+    border-style: solid;
+    border-radius: 2rem;
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#pop-up-recipe {
     position: fixed;
     height: 50rem;
     width: 40rem;
@@ -118,23 +161,71 @@ body {
     flex-direction: column;
 }
 
-#pop-up-prompt {
-    font-size: 3rem;
+.pop-up-prompt {
+    font-size: 40px;
     text-align: center;
-    margin-top: 6rem;
 }
 
-#pop-up-buttons {
+.pop-up-buttons {
     display: flex;
     justify-content: space-evenly;
     margin-top: 8rem;
 }
 
+#pop-up-buttons-single {
+    margin-top: 5rem;
+}
+
 #name-input {
-    height: 6rem;
-    margin-top: 6.5rem;
+    height: 50px;
+    font-size: 40px;
+}
+
+#qty-input {
+    height: 50px;
+    font-size: 40px;
+}
+
+#owner-input {
+    height: 50px;
+    font-size: 40px;
+}
+
+.quantity {
     font-size: 3rem;
-    width: 93.5%;
+    width: 5rem;
+    height: 4rem;
+}
+
+#quantity-pop-up {
+    width: 6rem;
+    font-size: 3rem;
+}
+
+#quantity-text {
+    font-size: 3rem;
+}
+
+#custom-select {
+    display: flex;
+    justify-content: center;
+    margin-top: 2.8rem;
+}
+
+#div-selector {
+    display: flex;
+    justify-content: center;
+    margin-top: 5rem;
+}
+
+#selector {
+    width: 32rem;
+    height: 5rem;
+    font-size: 3rem;
+}
+
+.select-selected {
+    background-color: blue;
 }
 
 input {
@@ -150,15 +241,4 @@ label {
     overflow: auto;
 }
 
-table {
-    width: 100%;
-}
-
-th {
-    border: #A7C7E7;
-}
-
-tr {
-    background-color: #A7C7E7;
-}
 

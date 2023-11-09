@@ -16,12 +16,10 @@
         <input type="text" id="name-input" name="nameInput">
 
         <div class="pop-up-prompt">How many?</div>
-        <input type="number" id="qty-input" name="qtyInput">
+        <input type="number" id="qty-input" name="qtyInput" value="1" height="20px">
 
         <div class="pop-up-prompt">Who owns this?</div>
-  
         <select id="owner-input">
-            <option value="Victor">Victor</option>
         </select>        
         
         <div id="pop-up-buttons">
@@ -34,35 +32,33 @@
     <div id="shopping-list"></div>
 
     <div class="navbar">
-        <button><img src="fridge.png" width="100" height="100"></button>
-        <button><img src="ecommerce_cart.png" width="100" height="100"></button>
-        <button><img src="chef.png" width="100" height="100"></button>
-        <button><img src="community.png" width="100" height="100"></button>
+        <a href="kitchenInventory.html"><img src="fridge.png" width="150" height="150"></a>
+        <a href="shopping.html"><img src="ecommerce_cart.png" width="150" height="150"></a>
+        <a href="recipeList.html"><img src="chef.png" width="150" height="150"></a>
+        <a href="profiles.html"><img src="community.png" width="150" height="150"></a>
     </div>
 
     <script>
 
         localStorage.setItem("inventory", JSON.stringify([]))
-        localStorage.setItem("qty", JSON.stringify([]))
-        localStorage.setItem("owner", JSON.stringify([]))
 
         let counter = 0
+        let parent = document.getElementById("owner-input")
+        let users = JSON.parse(localStorage.getItem("userList"))
+
+        let user = ""
+
+        for(let i = 0; i < users.length; i++) {
+            user = "<option value = \"" + users[i] + "\">" + users[i] + "</option>" 
+            parent.innerHTML += user
+            user = ""
+        }
+
+        reload()
 
         function addItemLink() {
             let popUp = document.getElementById("pop-up")
             popUp.style.visibility = "visible"
-
-            /* let parent = document.getElementById("options")
-            let users = JSON.parse(localStorage.getItem("users"))
-
-            let user = ""
-            for(let i = 0; i < users; i++) {
-                user = "<option value = " users[i] + ">" + users[i] + "</option>" 
-                parent.innerHTML += user
-                user = ""
-            }
-
-            parent.appendChild("options") */
         }
 
         function closeAddItemMenu() {
@@ -73,8 +69,6 @@
         function addItem() {
 
             let inventory = JSON.parse(localStorage.getItem("inventory"))
-            let qty = JSON.parse(localStorage.getItem("qty"))
-            let owner = JSON.parse(localStorage.getItem("owner"))
 
             let nameIn = document.getElementById("name-input")
             let qtyIn = document.getElementById("qty-input")
@@ -92,20 +86,20 @@
             let leftStr = "<label for=\"" + counter + "m\" contentEditable=\"true\" id=labelID>" + nameIn.value + "</label>"
             let qtyStr = "<input type=\"number\" value=\"" + qtyIn.value + "\">"
             let ownerStr = ownIn.value
-            let rightStr2 = "<span type=\"button\" class=\"float-right\" onclick=\"deleteItem(this.parentNode.parentNode.id)\">X</span>" 
+            let rightStr2 = "<span type=\"button\" class=\"float-right\" onclick=\"deleteItem([nameIn.value, qtyIn.value, ownIn.value])\">X</span>" 
+            let rightStr3 = "<span type=\"button\" class=\"float-right\" onclick=\"update()\">Edit</span>" 
 
-            inventory.push(nameIn.value)
-            qty.push(qtyIn.value)
-            owner.push(ownIn.value)
+            inventory.push([nameIn.value, qtyIn.value, ownIn.value])
+            
             localStorage.setItem("inventory", JSON.stringify(inventory))
-            localStorage.setItem("qty", JSON.stringify(qty))
-            localStorage.setItem("owner", JSON.stringify(owner))
 
             div.id = "listItem" + counter
             div.innerHTML += "<div class=\"left-half\">" + leftStr + "</div>"
             div.innerHTML += "<div class=\"left-half\">" + "Qty" + qtyStr + "</div>"
             div.innerHTML += "<div class=\"left-half\">" + "Owner: " + ownerStr + "</div>"
-            div.innerHTML += "<div id=\"" + rightName + "\" class=\"right-half\">" + rightStr1 + rightStr2 + "</div>"
+            div.innerHTML += "<div id=\"" + rightName + "2\" class=\"right-half\">" + rightStr3 + "</div>"
+            div.innerHTML += "<div id=\"" + rightName + "1\" class=\"right-half\">" + rightStr2 + "</div>"
+            
             counter += 1
 
             nameIn.value = ""
@@ -120,13 +114,47 @@
         }
 
         function deleteItem(id) {
-            // let groceries = JSON.parse(localStorage.getItem("groceries"))
+            
+            localStorage.removeItem()
+            reload()
+        }
 
-            currElem = document.getElementById(id)
-            currElem.parentNode.removeChild(currElem)
+        function update() {
 
-            // groceries = groceries.filter(item => item !== value)
-            // localStorage.setItem("groceries", JSON.stringify(groceries))
+        }
+
+        function reload() {
+            let item = JSON.parse(localStorage.getItem("inventory"))
+            console.log(item)
+            for(let i = 0; i < item.length; i++) {
+                let parent = document.getElementById("shopping-list")
+
+                let div = document.createElement("div")
+                let leftHalf = document.createElement("div")
+                let rightHalf = document.createElement("div")
+                let popUp = document.getElementById("pop-up")
+                let labelID = "label" + i
+                let leftName = "left" + i
+                let rightName = "right" + i
+                let leftStr = "<label for=\"" + i + "m\" id=labelID>" + item[i][0] + "</label>"
+                let qtyStr = "<input type=\"number\" value=\"" + item[i][1] + "\">"
+                let ownerStr = item[i][2]
+                let rightStr2 = "<span type=\"button\" class=\"float-right\" onclick=\"deleteItem([item[i][0], item[i][1], item[i][2]])\">X</span>"
+                let rightStr3 = "<span type=\"button\" class=\"float-right\" onclick=\"update()\">Edit</span>"  
+
+                div.id = "listItem" + i
+                div.innerHTML += "<div class=\"left-half\">" + leftStr + "</div>"
+                div.innerHTML += "<div class=\"left-half\">" + "Qty" + qtyStr + "</div>"
+                div.innerHTML += "<div class=\"left-half\">" + "Owner: " + ownerStr + "</div>"
+                div.innerHTML += "<div id=\"" + rightName + "1\" class=\"right-half\">" + rightStr3 + "</div>"
+                div.innerHTML += "<div id=\"" + rightName + "\" class=\"right-half\">" + rightStr2 + "</div>"
+
+                div.classList.add("widgetcolor")
+                div.classList.add("header")
+                div.classList.add("list-item")
+                parent.appendChild(div)
+                popUp.style.visibility = "hidden"
+            }
         }
     </script>
 
