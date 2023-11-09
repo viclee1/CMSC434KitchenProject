@@ -61,8 +61,18 @@
     </div>
 
     <script>
+
+        let currentList = []
         
-        localStorage.setItem("groceries", JSON.stringify([])) 
+        if(!localStorage.getItem("groceries")) {
+            localStorage.setItem("groceries", JSON.stringify([]))
+        } else {
+            currentList = JSON.parse(localStorage.getItem("groceries"))
+        }
+
+        for(let i = 0; i < currentList.length; i++) {
+            addItemAux(currentList[i][0], currentList[i][2], 3)
+        }
         
         recipesAdded = [] //this is to make sure the same option isn't added more than once
 
@@ -87,7 +97,8 @@
                 let options = spreadOptions.map(option => option.value)
                 console.log(options)
                 //add recipes to the options of the select element
-                if(recipeList !== [] || recipeList !== null) {
+
+                if(recipeList !== null && recipeList.length > 1) {
                     for (let i = 0; i < recipeList.length; i++) {
                         if(!options.includes(recipeList[i])) {
                             let option = document.createElement("option")
@@ -111,7 +122,6 @@
                 let popUp = document.getElementById("pop-up-recipe")
                 popUp.style.visibility = "hidden"
             }
-            
         }
 
         function dropdown() {
@@ -135,6 +145,14 @@
                 if(document.getElementById(item + "Item")) {
                     document.getElementById(item + "Quantity").value = parseInt(document.getElementById(item + "Quantity").value) + parseInt(quantity)
                     document.getElementById("pop-up").style.visibility = "hidden"
+                    let groceries = JSON.parse(localStorage.getItem("groceries"))
+                    for(let i = 0; i < groceries.length; i++) {
+                        if(groceries[i][0] == item) {
+                            let newQuantity = parseInt(groceries[i][2]) + parseInt(quantity)
+                            groceries[i][2] = newQuantity
+                        }
+                    }
+                    localStorage.setItem("groceries", JSON.stringify(groceries)) 
                 } else {
                     addItemAux(document.getElementById("name-input").value, quantity, 0)
                 }
@@ -151,6 +169,7 @@
                     if(document.getElementById(ingred + "Item")) {
                         document.getElementById(ingred + "Quantity").value = parseInt(document.getElementById(ingred + "Quantity").value) + parseInt(quantity)
                         document.getElementById("pop-up-recipe").style.visibility = "hidden"
+                        
                     } else {
                         addItemAux(ingred, quantity, 1)
                     }
@@ -166,24 +185,25 @@
             let leftHalf = document.createElement("div")
             let rightHalf = document.createElement("div")
             let popUp = id == 0 ? document.getElementById("pop-up") : document.getElementById("pop-up-recipe")
-            let labelID = "label" + counter
-            let leftName = "left" + counter
-            let rightName = "right" + counter
+            let labelID = "label" + value
+            let leftName = "left" + value
+            let rightName = "right" + value
 
             //this is the innerhtml we will be inserting for an item in the list
-            let leftStr = "<input type=\"checkbox\" id=\"" + counter + "\"> <label for=\"" + counter + "m\" contentEditable=\"true\" id=labelID>" + value + "</label>"
+            let leftStr = "<input type=\"checkbox\"> <label for=\"" + value + "m\" contentEditable=\"true\" id=labelID>" + value + "</label>"
             let rightStr1 = "<span>Quantity: </span>"
             let rightStr2 = "<input type=\"number\" class=\"quantity\" id=\"" + value + "Quantity\" name=\"quantity\" value=\"" + quantity + "\">"
             let rightStr3 = "<span type=\"button\" onclick=\"deleteItem(this.parentNode.parentNode.id)\">X</span>"
 
-            groceries.push(value)
-            localStorage.setItem("groceries", JSON.stringify(groceries)) 
-
+            if(id != 3) {
+                groceries.push([value, false, quantity])
+                localStorage.setItem("groceries", JSON.stringify(groceries)) 
+            }
+            
             //this is the id of the new element of the grocery list
             newElem.id = value.toLowerCase().trim() + "Item"
             newElem.innerHTML += "<div id=\"" + leftName + "\" class=\"left-half\">" + leftStr + "</div>"
             newElem.innerHTML += "<div id=\"" + rightName + "\" class=\"right-half\">" + rightStr1 + rightStr2 + rightStr3 + "</div>"
-            counter += 1
 
             input.value = ""
 
@@ -192,7 +212,9 @@
             newElem.classList.add("list-item")
             parent.appendChild(newElem)
 
-            popUp.style.visibility = "hidden"
+            if(id != 3) {
+                popUp.style.visibility = "hidden"
+            }
         }
         
         function deleteItem(id) {
