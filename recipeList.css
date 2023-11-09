@@ -102,7 +102,7 @@ body {
   /* Add styles to the form container */
   .form-container {
     width: 100%;
-    height: 500px;
+    height: 900px;
     background-color: #A7C7E7;
     overflow: hidden;
     position: relative;
@@ -111,6 +111,7 @@ body {
 .form-container .element {
     display: block;
     margin-left: 2%;
+    font-size: 2rem;
 }
 /* Set a style for the submit/login button */
 .form-container .btn {
@@ -140,7 +141,8 @@ body {
     position: relative;
     bottom: 0;
   }
-  
+  textarea { font-size: 30px; }
+  input { font-size: 30px; }
   /* Add some hover effects to buttons */
   .form-container .btn:hover, .open-button:hover {
     opacity: 1;
@@ -160,3 +162,8 @@ body {
     color: white;
   }
 
+
+  /* Add this to your existing CSS styles */
+.user-input {
+  font-size: 24px; /* Adjust the font size as needed */
+}
