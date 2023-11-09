@@ -1,5 +1,5 @@
 * {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: monaco,Consolas,Lucida Console,monospace;
 }
 body {
     background-color: #faeee7;
@@ -34,6 +34,11 @@ body {
     color: #33272a;
 }
 
+#userList {
+    overflow: scroll;
+    height: 111rem;
+}
+
 .user {
     background-color: #A7C7E7;
     padding:15px;
@@ -41,6 +46,7 @@ body {
     flex-direction: row;
     margin: 15px;
     font-size: 3rem;
+    border-radius: 1.7rem;
 }
 
 .userHeader {
@@ -68,7 +74,7 @@ body {
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     margin:10px;
-    width: 200px;
+    width: 13.9rem;
     height: 80px; 
     font-size: 30px;
     background-color: #A7C7E7;
@@ -86,7 +92,7 @@ body {
 
 #pop-up {
     position: fixed;
-    height: 55rem;
+    height: 60rem;
     width: 40rem;
     top: 25%;
     left: 15.4%;

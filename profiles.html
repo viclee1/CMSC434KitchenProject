@@ -12,7 +12,7 @@
     <div id="Profiles" class="tabcontent" >
         <div class="header">
             <span style="vertical-align:middle">Profiles</span>
-            <button class="addUserButton" onClick="addItemLink()">Add User</button>
+            <button class="addUserButton" onClick="addItemLink()">+ Add User</button>
         </div>
 
         <div id="pop-up">
@@ -79,8 +79,8 @@
             let leftName = "left" + counter
             let rightName = "right" + counter
             let leftStr = "<p>" + nameInput + "</p>"
-            let rightStr1 = "<p class=\"float-right\">Allergies:" + allerInput + "</p>"
-            let rightStr2 = "<span id=\"" + nameInput + "\" type=\"button\" class=\"float-right\" onclick=\"deleteItem(this.parentNode.parentNode.parentNode.id, this.id)\">X</span>"
+            let rightStr1 = "<p class=\"float-right\">Allergies: " + allerInput + "</p>"
+            let rightStr2 = "<span id=\"" + nameInput + "\" type=\"button\" class=\"float-right\" onclick=\"deleteItem(this.parentNode.parentNode.id, this.id)\">X</span>"
 
             list.add(nameInput)
             localStorage.setItem("userList", JSON.stringify(Array.from(list)))
