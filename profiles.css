@@ -1,0 +1,137 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+body {
+    background-color: #faeee7;
+}
+
+.navbar {
+    background-color: #A7C7E7;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+}
+
+.navbar img {
+    float: left;
+    display: block;
+    text-align: center;
+    padding: 14px 45px;
+}
+.header {
+    font-size: 5rem;
+    padding:15px
+}
+
+.content{
+    background-color: #fffffe;
+}
+
+.widgetcolor p {
+    padding-left: 1rem;
+    color: #33272a;
+}
+
+.user {
+    background-color: #A7C7E7;
+    padding:15px;
+    display: flex;
+    flex-direction: row;
+    margin: 15px;
+    font-size: 3rem;
+}
+
+.userHeader {
+    font-size: 3rem;
+    display:inline;
+}
+
+.left-half {
+    width: 30%;
+    margin: auto;
+}
+
+.middle {
+    width: 65%;
+}
+
+.right-half {
+    width: 5%;
+}
+
+.addUserButton {
+    float: right;
+    padding: 10px;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    margin:10px;
+    width: 200px;
+    height: 80px; 
+    font-size: 30px;
+    background-color: #A7C7E7;
+}
+
+.allergies {
+    font-size: 2rem;
+}
+
+.p-buttons {
+    width: 14rem;
+    height: 9rem;
+    font-size: 3rem;
+}
+
+#pop-up {
+    position: fixed;
+    height: 50rem;
+    width: 40rem;
+    top: 25%;
+    left: 15.4%;
+    background-color: #A7C7E7;
+    border-color: #fffffe;
+    border-width: 1rem;
+    border-style: solid;
+    border-radius: 2rem;
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.pop-up-prompt {
+    font-size: 3rem;
+    text-align: center;
+    margin-top: 3rem;
+}
+
+#pop-up-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 4rem;
+}
+
+.inputBox {
+    height: 6rem;
+    margin-top: 3rem;
+    font-size: 3rem;
+    width: 93.5%;
+}
+
+input {
+    margin-left: 1rem;
+    margin-right: 2rem;
+}
+
+input[type="checkbox"] {
+    width: 80px;
+}
+
+label {
+    overflow: auto;
+}
+
+.float-right {
+    word-wrap: normal;
+}
