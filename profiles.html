@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div id="Profiles" class="tabcontent" >
+    <div id="Profiles" class="tabcontent">
         <div class="header">
             <span style="vertical-align:middle">Profiles</span>
             <button class="addUserButton" onClick="addItemLink()">+ Add User</button>
@@ -42,6 +42,19 @@
     <script>
         let counter = 0
 
+        let currentList = []
+        
+        if(!localStorage.getItem("userList")) {
+            localStorage.setItem("userList", JSON.stringify([]))
+        } else {
+            currentList = JSON.parse(localStorage.getItem("userList"))
+        }
+
+        for(let i = 0; i < currentList.length; i++) {
+            let aller = JSON.parse(localStorage.getItem(currentList[i]+"_allergies"))
+            addItemAux(currentList[i], aller, i)
+        }
+
         function addItemLink() {
             let popUp = document.getElementById("pop-up")
             popUp.style.visibility = "visible"
@@ -63,7 +76,16 @@
                 return
             }
 
-            let allerList = allerInput.split(',')
+            let currNames = JSON.parse(localStorage.getItem("userList"))
+
+            if(currNames.includes(nameInput)) {
+                alert("User already exists, please enter new user")
+                document.getElementById("name-input").value = ""
+                document.getElementById("allergies-input").value = ""
+                return
+            }
+
+            
             let data = localStorage.getItem('userList')
             let list = new Set()
             if(data == null) {
@@ -85,7 +107,10 @@
             list.add(nameInput)
             localStorage.setItem("userList", JSON.stringify(Array.from(list)))
 
+            let allerList = allerInput.split(', ')
             localStorage.setItem(nameInput + "_allergies", JSON.stringify(allerList))
+            
+            currentList.push(name)
 
             newElem.id = "listItem" + counter
             newElem.innerHTML += "<div id=\"" + leftName + "\" class=\"left-half\">" + leftStr + "</div>"
@@ -101,15 +126,57 @@
             popUp.style.visibility = "hidden"
         }
 
+        function addItemAux(name, allergies, i) {
+
+            let parent = document.getElementById("userList")
+            let newElem = document.createElement("div")
+
+            allerInput = ""
+
+            for(var i = 0; i < allergies.length; i++) {
+                if(i < allergies.length - 1) {
+                    allerInput += allergies[i] + ", "
+                } else {
+                    allerInput += allergies[i]
+                }
+            }
+
+            let leftStr = "<p>" + name + "</p>"
+            let rightStr1 = "<p class=\"float-right\">Allergies: " + allerInput + "</p>"
+            let rightStr2 = "<span id=\"" + name + "\" type=\"button\" class=\"float-right\" onclick=\"deleteItem(this.parentNode.parentNode.id, this.id)\">X</span>"
+
+            let leftName = "left" + i
+            let rightName = "right" + i
+
+            newElem.innerHTML += "<div id=\"" + leftName + "\" class=\"left-half\">" + leftStr + "</div>"
+            newElem.innerHTML += "<div id=\"" + rightName + "\" class=\"middle\">" + rightStr1 + "</div>"
+            newElem.innerHTML += "<div class=\"right-half\">" + rightStr2 + "</div>"
+
+            newElem.id = "listItem" + i
+            newElem.classList.add("user")
+            parent.appendChild(newElem)
+
+
+        }
+
         function deleteItem(id, name) {
-            currElem = document.getElementById(id)
-            currElem.parentNode.removeChild(currElem)
+            // currElem = document.getElementById(id)
+            // currElem.parentNode.removeChild(currElem)
 
             let data = localStorage.getItem('userList')
             let list = new Set(JSON.parse(data))
             list.delete(name)
             localStorage.setItem("userList", JSON.stringify(Array.from(list)))
             localStorage.removeItem(name+"_allergies")
+
+            document.getElementById("userList").innerHTML = ""
+
+            let currNames = JSON.parse(localStorage.getItem("userList"))
+            for(let i = 0; i < currNames.length; i++) {
+                let aller = JSON.parse(localStorage.getItem(currNames[i]+"_allergies"))
+                addItemAux(currNames[i], aller, i)
+            }
+
         }
 
     </script>
