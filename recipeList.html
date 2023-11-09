@@ -92,10 +92,11 @@
 
             var ingr = document.createElement("ul");
             ingr.setAttribute("id", "ing");
-
+            var temp = new Set();
             for (var i = 0; i < ingredientsList.length; i++) {
                 var ingredientInfo = ingredientsList[i].split(':');
                 var ingredientName = ingredientInfo[0].trim();
+                temp.add(ingredientName);
                 var ingredientQuantity = ingredientInfo[1].trim();
 
                 var li = document.createElement('li');
@@ -105,22 +106,23 @@
             var people = new Set(JSON.parse(localStorage.getItem('userList')));
             var allg = document.createElement("ul");
             allg.setAttribute("id", "allg");
-            for (var i = 0; i < people.length; i++) {
+            for (const i of people) {
                 var li = document.createElement('li');
-                var al = people + "may be allergic to ";
-                var j = new Set(JSON.parse(localStorage.getItem(people +"_allergies")));
+                var al = i + " may be allergic to:";
+                var j = new Set(JSON.parse(localStorage.getItem(i +"_allergies")));
                 var t = new Set();
-                for(var z = 0; z < j.length; z++) {
-                    if (list.has(j[z])) {
-                        t.add(j[z]);
+                for(const m of j) {
+                    if(temp.has(m)) {
+                        t.add(m)
                     }
                 }
-
-                for (var z = 0; z < t.length; z++) {
-                    al = al + ", " + t[z];
+                if (t.size > 0) {
+                    for (const z of t) {
+                        al = al + " "+ z;
+                    }
+                    li.appendChild(document.createTextNode(al));
+                    allg.appendChild(li);
                 }
-                li.appendChild(document.createTextNode(al));
-                allg.appendChild(li);
             }
 
             descriptionContainer.append(ingr);
