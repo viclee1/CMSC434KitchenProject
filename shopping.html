@@ -202,6 +202,10 @@
             let rightStr2 = "<input type=\"number\" class=\"quantity\" id=\"" + value + "Quantity\" name=\"quantity\" value=\"" + quantity + "\">"
             let rightStr3 = "<span type=\"button\" onclick=\"deleteItem(this.parentNode.parentNode.id)\">X</span>"
 
+            if(id == 0) {
+                document.getElementById("name-input").value = ""
+            }
+
             if(id != 3) {
                 groceries.push([value, false, quantity])
                 localStorage.setItem("groceries", JSON.stringify(groceries)) 
