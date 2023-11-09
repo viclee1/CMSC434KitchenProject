@@ -12,26 +12,25 @@
         <span style="vertical-align: middle">Recipes</span>
     </div>
 
-    <button onclick="newRecipe()" class="addRecipe">+ Add Recipe</button>
-    <div class="form-popup" id="myForm">
-        <form class="form-container">
-            <h1 class='element'>Add New Recipe</h1>
-
-            <label class='element' for="name"><b>Recipe Name</b></label>
-            <input class='element' id="name" type="text" name="name" placeholder="Enter Name">
-            <label class='element' for="description"><b>Recipe Description</b></label>
-            <textarea class='element' id="description" name="description" rows="4" cols="50"
+    <button onclick="addItemLink()" class="addRecipe">+ Add Recipe</button>
+    <div id="pop-up">
+        <div id="pop-up-prompt">Add New Recipe</div>
+        <label class='element' for="name"><b>Recipe Name</b></label>
+        <input class='element' id="name" type="text" name="name" placeholder="Enter Name">
+        <label class='element' for="description"><b>Recipe Description</b></label>
+        <textarea class='element' id="description" name="description" rows="4" cols="50"
                 placeholder="Enter Description"></textarea>
 
             <!-- Add a new input field for ingredients with quantities -->
-            <label class='element' for="ingredients"><b>Ingredients (Ingredient: Quantity, Ingredient: Quantity)</label>
-            <input class='element' id="ingredients" type="text" name="ingredients"
-                placeholder="Enter Ingredients and Quantities (e.g., Ingredient1: Quantity1, Ingredient2: Quantity2)">
-
-            <button type="button" class="btn" onclick="createRecipe()">Create</button>
-            <button type="button" class="cancel" onclick="closeForm()">Close</button>
-        </form>
+        <label class='element' for="ingredients"><b>Ingredients (Ingredient: Quantity, Ingredient: Quantity)</label>
+        <input class='element' id="ingredients" type="text" name="ingredients"
+            placeholder="Enter Ingredients and Quantities (e.g., Ingredient1: Quantity1, Ingredient2: Quantity2)">
+        <div id="pop-up-buttons">
+            <button type="button" class="p-buttons" onclick="closeAddItemMenu()">Exit</button>
+            <button type="button" class="p-buttons" onclick="createRecipe()">Add Recipe</button>
+        </div>
     </div>
+
     <div id="recipeContainer"></div>
 
     <div class="navbar">
@@ -42,12 +41,14 @@
     </div>
 
     <script>
-        function newRecipe() {
-            document.getElementById("myForm").style.display = "block";
+         function addItemLink() {
+            let popUp = document.getElementById("pop-up");
+            popUp.style.visibility = "visible";
         }
 
-        function closeForm() {
-            document.getElementById("myForm").style.display = "none";
+        function closeAddItemMenu() {
+            let popUp = document.getElementById("pop-up");
+            popUp.style.visibility = "hidden";
         }
 
         function createRecipe() {
@@ -139,7 +140,7 @@
             document.getElementById("description").value = "";
             document.getElementById("name").value = "";
             document.getElementById("ingredients").value = "";
-            closeForm();
+            closeAddItemMenu();
         }
     </script>
 </body>
