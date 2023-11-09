@@ -93,8 +93,8 @@
             newElem.innerHTML += "<div class=\"right-half\">" + rightStr2 + "</div>"
             counter += 1
 
-            nameInput = ""
-            allerInput = ""
+            document.getElementById("name-input").value = ""
+            document.getElementById("allergies-input").value = ""
 
             newElem.classList.add("user")
             parent.appendChild(newElem)
