@@ -71,7 +71,7 @@
         }
 
         for(let i = 0; i < currentList.length; i++) {
-            addItemAux(currentList[i][0], currentList[i][2], 3)
+            addItemAux(currentList[i][0], currentList[i][2], 3, currentList[i][1])
         }
         
         recipesAdded = [] //this is to make sure the same option isn't added more than once
@@ -161,7 +161,7 @@
                         }
                         localStorage.setItem("groceries", JSON.stringify(groceries)) 
                     } else {
-                        addItemAux(document.getElementById("name-input").value, quantity, 0)
+                        addItemAux(document.getElementById("name-input").value, quantity, 0, false)
                     }
                 }
             } else {
@@ -179,14 +179,14 @@
                             document.getElementById(ingred + "Quantity").value = parseInt(document.getElementById(ingred + "Quantity").value) + parseInt(quantity)
                             document.getElementById("pop-up-recipe").style.visibility = "hidden"
                         } else {
-                            addItemAux(ingred, quantity, 1)
+                            addItemAux(ingred, quantity, 1, false)
                         }
                     }
                 }
             }
         }
 
-        function addItemAux(value, quantity, id) {
+        function addItemAux(value, quantity, id, checked) {
             let groceries = JSON.parse(localStorage.getItem("groceries"))
             let input = document.getElementById("name-input")
             let parent = document.getElementById("shopping-list")
@@ -195,9 +195,10 @@
             let labelID = "label" + value
             let leftName = "left" + value
             let rightName = "right" + value
+            let checkedVal = checked ? "checked" : ""
 
             //this is the innerhtml we will be inserting for an item in the list
-            let leftStr = "<input type=\"checkbox\"> <label for=\"" + value + "m\" contentEditable=\"true\" id=labelID>" + value + "</label>"
+            let leftStr = "<input type=\"checkbox\" onchange=\"checkChange(this, this.id)\"id = \"" + value + "Check\" " + checkedVal + "> <label for=\"" + value + "m\" contentEditable=\"true\" id=labelID>" + value + "</label>"
             let rightStr1 = "<span>Quantity: </span>"
             let rightStr2 = "<input type=\"number\" class=\"quantity\" id=\"" + value + "Quantity\" name=\"quantity\" value=\"" + quantity + "\">"
             let rightStr3 = "<span type=\"button\" onclick=\"deleteItem(this.parentNode.parentNode.id)\">X</span>"
@@ -236,6 +237,27 @@
             currElem.parentNode.removeChild(currElem)
 
             groceries = groceries.filter(item => item[0] != currElemId)
+            localStorage.setItem("groceries", JSON.stringify(groceries)) 
+        }
+
+        function checkChange(checkbox, id) {
+            let groceries = JSON.parse(localStorage.getItem("groceries"))
+            let idReplaced = id.replace("Check", "")
+            if(checkbox.checked) {
+                for(let i = 0; i < groceries.length; i++) {
+                    if(groceries[i][0] === idReplaced) {
+                        groceries[i][1] = true
+                        break
+                    }
+                }
+            } else {
+                for(let i = 0; i < groceries.length; i++) {
+                    if(groceries[i][0] === idReplaced) {
+                        groceries[i][1] = false
+                        break
+                    }
+                }
+            }
             localStorage.setItem("groceries", JSON.stringify(groceries)) 
         }
     </script>
