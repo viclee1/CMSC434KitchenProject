@@ -92,8 +92,7 @@
             let qtyStr = "<input type=\"number\" id=\"" + qtyIn.value + couter + "\" value=\"" + qtyIn.value + "\">"
             let ownerStr = ownIn.value
             let rightStr2 = "<span type=\"button\" class=\"float-right\" onclick=\"deleteItem(\'" + nameIn.value +"\', \'" + qtyIn.value + "\', \'" + ownIn.value + "\', this.parentNode.parentNode.id)\">X</span>" 
-            let rightStr3 = "<span type=\"button\" class=\"float-right\" onclick=\"update(document.getElementById(\"" + qtyIn.value + counter + "\"), nameIn.value, qtyIn.value, ownIn.value)\">Update</span>" 
-/*             let rightStr3 = "<span type=\"button\" class=\"float-right\" onclick=\"update()\">Update</span>"  */
+            let rightStr3 = "<span type=\"button\" class=\"float-right\" onclick=\"update()\">Update</span>"
             inventory.push([nameIn.value, qtyIn.value, ownIn.value])
             
             localStorage.setItem("inventory", JSON.stringify(inventory))
