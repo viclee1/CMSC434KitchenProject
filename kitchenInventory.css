@@ -1,9 +1,8 @@
-.title {
-    font-size: 60px;
+* {
+    font-family: monaco,Consolas,Lucida Console,monospace;
 }
-
-.sub {
-    font-size: 25px;
+body {
+    background-color: #faeee7;
 }
 
 .navbar {
@@ -22,30 +21,222 @@
     padding: 14px 45px;
 }
 
-.left {
-    position: absolute;
-    right: 0;
+#header {
+    font-size: 4rem;
+    padding: 15px;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+.widgetcolor {
+    background-color: #A7C7E7;
+    padding:8px;
+}
+
+.content{
+    background-color: #fffffe;
+}
+
+.widgetcolor p {
+    /* padding: 2px; */
+    padding-left: 1rem;
+    color: #33272a;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.add-item {
+    font-size: 2rem;
+    margin-left: 13rem;
+    text-align: center;
+    padding-right: 1.1rem;
+    border-radius: 10px;
+}
+
+.dropdown-add {
+    position: fixed;
+    visibility: hidden;
+}
+
+#single-add {
+    top: 6%;
+    left: 53.2%;
+    width: 13.9rem;
+    background-color: #a7b2e7;
+}
+
+#recipe-add {
+    top: 11.5%;
+    left: 53.2%;
+    width: 13.9rem;
+    background-color: #a7b2e7;
+}
+
+#shopping-list {
+    font-size: 1.5rem;
+    overflow: scroll;
+    height: 111rem;
+}
+
+.notes {
+    font-size: 2rem;
+    float: right;
+    margin-top: 0.55rem;
+}
+
+.list-item {
+    display: flex;
+    flex-direction: row;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    border-radius: 1.7rem;
+    padding: 1rem;
+}
+
+.button {
+    background-color: #A7C7E7;
+    height: 3.4rem;
+    width: 10rem;
+    float: right;
+    display: flex;
+    justify-content: center;
+}
+
+.left-half {
+    width: 50%;
+    display: flex;
+}
+
+.right-half {
+    width: 50%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.p-buttons {
+    width: 14rem;
+    height: 9rem;
+    font-size: 30px;
+    border-radius: 10px;
+    margin-top: 30px;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+#pop-up {
+    position: fixed;
+    height: 40rem;
+    width: 40rem;
+    top: 25%;
+    left: 15.4%;
+    background-color: #A7C7E7;
+    border-color: #fffffe;
+    border-width: 1rem;
+    border-style: solid;
+    border-radius: 2rem;
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#pop-up-recipe {
+    position: fixed;
+    height: 50rem;
+    width: 40rem;
+    top: 25%;
+    left: 15.4%;
+    background-color: #A7C7E7;
+    border-color: #fffffe;
+    border-width: 1rem;
+    border-style: solid;
+    border-radius: 2rem;
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.pop-up-prompt {
+    font-size: 40px;
+    text-align: center;
+}
+
+.pop-up-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 8rem;
+}
+
+#pop-up-buttons-single {
+    margin-top: 5rem;
+}
+
+#name-input {
     height: 50px;
-    width: 100px;
+    font-size: 40px;
 }
 
-#imgRow {
-    width: 100px;
+#qty-input {
+    height: 50px;
+    font-size: 40px;
 }
 
-table {
-    width: 100%;
+#owner-input {
+    height: 50px;
+    font-size: 40px;
 }
 
-th {
-    border: #ff8ba7;
+.quantity {
+    font-size: 3rem;
+    width: 5rem;
+    height: 4rem;
 }
 
-tr {
-    background-color: #ff8ba7;
+#quantity-pop-up {
+    width: 6rem;
+    font-size: 3rem;
 }
 
-#outline {
-    outline: thin solid;
-    background-color: #ff8ba7;
+#quantity-text {
+    font-size: 3rem;
+}
+
+#custom-select {
+    display: flex;
+    justify-content: center;
+    margin-top: 2.8rem;
+}
+
+#div-selector {
+    display: flex;
+    justify-content: center;
+    margin-top: 5rem;
+}
+
+#selector {
+    width: 32rem;
+    height: 5rem;
+    font-size: 3rem;
+}
+
+.select-selected {
+    background-color: blue;
+}
+
+input {
+    margin-left: 1rem;
+    margin-right: 2rem;
+}
+
+input[type="checkbox"] {
+    width: 80px;
+}
+
+label {
+    overflow: auto;
 }
