@@ -39,8 +39,11 @@
     </div>
 
     <script>
-
-        localStorage.setItem("inventory", JSON.stringify([]))
+        if(localStorage.getItem("inventory") != null) {
+            reload()
+        } else {
+            localStorage.setItem("inventory", JSON.stringify([]))
+        }
 
         let counter = 0
         let parent = document.getElementById("owner-input")
@@ -54,7 +57,7 @@
             user = ""
         }
 
-        reload()
+        
 
         function addItemLink() {
             let popUp = document.getElementById("pop-up")
@@ -67,12 +70,16 @@
         }
 
         function addItem() {
-
+            
             let inventory = JSON.parse(localStorage.getItem("inventory"))
 
             let nameIn = document.getElementById("name-input")
             let qtyIn = document.getElementById("qty-input")
             let ownIn = document.getElementById("owner-input")
+            if(!nameIn.value || !qtyIn.value || !ownIn.value) {
+                alert("Please fill in all the required fields.")
+                return
+            }
             
             let parent = document.getElementById("shopping-list")
 
@@ -84,10 +91,10 @@
             let leftName = "left" + counter
             let rightName = "right" + counter
             let leftStr = "<label for=\"" + counter + "m\" contentEditable=\"true\" id=labelID>" + nameIn.value + "</label>"
-            let qtyStr = "<input type=\"number\" value=\"" + qtyIn.value + "\">"
+            let qtyStr = "<input type=\"number\" id=\" " + qtyIn.value + "\" value=\"" + qtyIn.value + "\">"
             let ownerStr = ownIn.value
-            let rightStr2 = "<span type=\"button\" class=\"float-right\" onclick=\"deleteItem([nameIn.value, qtyIn.value, ownIn.value])\">X</span>" 
-            let rightStr3 = "<span type=\"button\" class=\"float-right\" onclick=\"update()\">Edit</span>" 
+            let rightStr2 = "<span type=\"button\" class=\"float-right\" onclick=\"deleteItem(\"" + (nameIn.value) + "\", \"" + (qtyIn.value) + "\", \"" + (ownIn.value) + "\", this.parentNode.parentNode.id)\">X</span>" 
+            let rightStr3 = "<span type=\"button\" class=\"float-right\" onclick=\"update(document.getElementById(\"" + (qtyIn.value) + "\"), \"" + nameIn.value + "\", \"" + qtyIn.value + "\", \"" + ownin.value + "),this.parentNode.parentNode.id)\">Update</span>" 
 
             inventory.push([nameIn.value, qtyIn.value, ownIn.value])
             
@@ -113,22 +120,33 @@
             popUp.style.visibility = "hidden"
         }
 
-        function deleteItem(id) {
-            
-            localStorage.removeItem()
-            reload()
+        function deleteItem(name, qty, owner, id) {
+            let items = JSON.parse(localStorage.getItem("inventory"))
+            let newItems = []
+            for(let i = 0; i < items.length; i++) {
+                console.log(items[i][0])
+                console.log(items[i][1])
+                console.log(items[i][2])
+                if(JSON.stringify(items[i][0]) != name && JSON.stringify(items[i][1]) != qty && JSON.stringify(items[i][2]) != owner) {
+                    newItems.push(items[i])
+                }
+            }
+            localStorage.setItem("inventory", JSON.stringify(newItems))
+            currElem = document.getElementById(id)
+            currElem.parentNode.removeChild(currElem)
         }
 
-        function update() {
-
+        function update(updateValue, name, number, owner, id) {
+            
+            currElem = document.getElementById(id)
+            currElem.parentNode.removeChild(currElem)
         }
 
         function reload() {
             let item = JSON.parse(localStorage.getItem("inventory"))
-            console.log(item)
+            console.log(item);
+            let parent = document.getElementById("shopping-list")
             for(let i = 0; i < item.length; i++) {
-                let parent = document.getElementById("shopping-list")
-
                 let div = document.createElement("div")
                 let leftHalf = document.createElement("div")
                 let rightHalf = document.createElement("div")
@@ -136,10 +154,13 @@
                 let labelID = "label" + i
                 let leftName = "left" + i
                 let rightName = "right" + i
+                let itemName = item[i][0]
+                let itemNumber = item[i][1]
+                let itemOwner = item[i][2]
                 let leftStr = "<label for=\"" + i + "m\" id=labelID>" + item[i][0] + "</label>"
                 let qtyStr = "<input type=\"number\" value=\"" + item[i][1] + "\">"
                 let ownerStr = item[i][2]
-                let rightStr2 = "<span type=\"button\" class=\"float-right\" onclick=\"deleteItem([item[i][0], item[i][1], item[i][2]])\">X</span>"
+                let rightStr2 = "<span type=\"button\" class=\"float-right\" onclick=\"deleteItem(" + JSON.stringify(itemName) + "," + JSON.stringify(itemNumber) + "," + JSON.stringify(itemOwner) + ", this.parentNode.parentNode.id)\">X</span>"
                 let rightStr3 = "<span type=\"button\" class=\"float-right\" onclick=\"update()\">Edit</span>"  
 
                 div.id = "listItem" + i
