@@ -1,5 +1,5 @@
 * {
-    font-family: monaco,Consolas,Lucida Console,monospace;;
+    font-family: monaco,Consolas,Lucida Console,monospace;
 }
 body {
     background-color: #faeee7;
@@ -27,27 +27,12 @@ body {
     margin-top: 1rem;
     margin-bottom: 2rem;
 }
-.widget {
-    background-color: #fffffe;
-    font-size: 2rem;
-}
 
 .widgetcolor {
     background-color: #A7C7E7;
     padding:8px;
 }
 
-.halfwid1 {
-    background-color: #fffffe;
-    font-size: 2rem;
-    flex: 49%;
-}
-
-.halfwid2 {
-    background-color: #fffffe;
-    font-size: 2rem;
-    flex: 49%;
-}
 .content{
     background-color: #fffffe;
 }
@@ -63,11 +48,31 @@ body {
     flex-direction: row;
 }
 
-#add-item {
+.add-item {
     font-size: 2rem;
     margin-left: 13rem;
     text-align: center;
     padding-right: 1.1rem;
+    border-radius: 10px;
+}
+
+.dropdown-add {
+    position: fixed;
+    visibility: hidden;
+}
+
+#single-add {
+    top: 6%;
+    left: 53.2%;
+    width: 13.9rem;
+    background-color: #a7b2e7;
+}
+
+#recipe-add {
+    top: 11.5%;
+    left: 53.2%;
+    width: 13.9rem;
+    background-color: #a7b2e7;
 }
 
 #shopping-list {
@@ -113,6 +118,12 @@ body {
     width: 14rem;
     height: 9rem;
     font-size: 3rem;
+    border-radius: 10px;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
 }
 
 #pop-up {
@@ -131,23 +142,82 @@ body {
     flex-direction: column;
 }
 
-#pop-up-prompt {
+#pop-up-recipe {
+    position: fixed;
+    height: 50rem;
+    width: 40rem;
+    top: 25%;
+    left: 15.4%;
+    background-color: #A7C7E7;
+    border-color: #fffffe;
+    border-width: 1rem;
+    border-style: solid;
+    border-radius: 2rem;
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.pop-up-prompt {
     font-size: 3rem;
     text-align: center;
     margin-top: 6rem;
 }
 
-#pop-up-buttons {
+.pop-up-buttons {
     display: flex;
     justify-content: space-evenly;
     margin-top: 8rem;
 }
 
+#pop-up-buttons-single {
+    margin-top: 5rem;
+}
+
 #name-input {
     height: 6rem;
-    margin-top: 6.5rem;
+    margin-top: 3rem;
     font-size: 3rem;
-    width: 93.5%;
+    width: 32rem;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.quantity {
+    font-size: 3rem;
+    width: 5rem;
+    height: 4rem;
+}
+
+#quantity-pop-up {
+    width: 6rem;
+    font-size: 3rem;
+}
+
+#quantity-text {
+    font-size: 3rem;
+}
+
+#custom-select {
+    display: flex;
+    justify-content: center;
+    margin-top: 2.8rem;
+}
+
+#div-selector {
+    display: flex;
+    justify-content: center;
+    margin-top: 5rem;
+}
+
+#selector {
+    width: 32rem;
+    height: 5rem;
+    font-size: 3rem;
+}
+
+.select-selected {
+    background-color: blue;
 }
 
 input {
@@ -162,6 +232,7 @@ input[type="checkbox"] {
 label {
     overflow: auto;
 }
+
 
 
 

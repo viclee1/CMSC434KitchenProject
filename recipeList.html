@@ -12,26 +12,25 @@
         <span style="vertical-align: middle">Recipes</span>
     </div>
 
-    <button onclick="newRecipe()" class="addRecipe">+ Add Recipe</button>
-    <div class="form-popup" id="myForm">
-        <form class="form-container">
-            <h1 class='element'>Add New Recipe</h1>
-
-            <label class='element' for="name"><b>Recipe Name</b></label>
-            <input class='element' id="name" type="text" name="name" placeholder="Enter Name">
-            <label class='element' for="description"><b>Recipe Description</b></label>
-            <textarea class='element' id="description" name="description" rows="4" cols="50"
+    <button onclick="addItemLink()" class="addRecipe">+ Add Recipe</button>
+    <div id="pop-up">
+        <div id="pop-up-prompt">Add New Recipe</div>
+        <label class='element' for="name"><b>Recipe Name</b></label>
+        <input class='element' id="name" type="text" name="name" placeholder="Enter Name">
+        <label class='element' for="description"><b>Recipe Instruction</b></label>
+        <textarea class='element' id="description" name="description" rows="4" cols="50"
                 placeholder="Enter Description"></textarea>
 
             <!-- Add a new input field for ingredients with quantities -->
-            <label class='element' for="ingredients"><b>Ingredients (Ingredient: Quantity, Ingredient: Quantity)</label>
-            <input class='element' id="ingredients" type="text" name="ingredients"
-                placeholder="Enter Ingredients and Quantities (e.g., Ingredient1: Quantity1, Ingredient2: Quantity2)">
-
-            <button type="button" class="btn" onclick="createRecipe()">Create</button>
-            <button type="button" class="cancel" onclick="closeForm()">Close</button>
-        </form>
+        <label class='element' for="ingredients"><b>Ingredients (Ingredient: Quantity, Ingredient: Quantity)</label>
+        <input class='element' id="ingredients" type="text" name="ingredients"
+            placeholder="Enter Ingredients and Quantities (e.g., Ingredient1: Quantity1, Ingredient2: Quantity2)">
+        <div id="pop-up-buttons">
+            <button type="button" class="p-buttons" onclick="closeAddItemMenu()">Exit</button>
+            <button type="button" class="p-buttons" onclick="createRecipe()">Add Recipe</button>
+        </div>
     </div>
+
     <div id="recipeContainer"></div>
 
     <div class="navbar">
@@ -42,12 +41,25 @@
     </div>
 
     <script>
-        function newRecipe() {
-            document.getElementById("myForm").style.display = "block";
+        let recipeData = [];
+        if (!localStorage.getItem("recipeListData")) {
+            localStorage.setItem("recipeListData", JSON.stringify([]));
+        } else {
+            recipeData = JSON.parse(localStorage.getItem("recipeListData"));
         }
 
-        function closeForm() {
-            document.getElementById("myForm").style.display = "none";
+        for (let i = 0; i < recipeData.length; i++) {
+            createRecipeElement(recipeData[i]);
+        }
+
+        function addItemLink() {
+            let popUp = document.getElementById("pop-up");
+            popUp.style.visibility = "visible";
+        }
+
+        function closeAddItemMenu() {
+            let popUp = document.getElementById("pop-up");
+            popUp.style.visibility = "hidden";
         }
 
         function createRecipe() {
@@ -55,13 +67,21 @@
             var description = document.getElementById("description").value;
             var ingredientsInput = document.getElementById("ingredients").value;
 
-            // Check if any of the required fields are empty
             if (!name || !description || !ingredientsInput) {
                 alert("Please fill in all the required fields.");
                 return;
             }
-
-            // Check if ingredients input has the correct format
+            var data = localStorage.getItem('recipeList');
+            var list = new Set();
+            if (data == null) {
+                localStorage.setItem("recipeList", JSON.stringify([]));
+            } else {
+                list = new Set(JSON.parse(data));
+            }
+            if (list.has(name)) {
+                alert("This recipe name already exists. ");
+                return;
+            }
             var ingredientsList = ingredientsInput.split(',');
             for (var i = 0; i < ingredientsList.length; i++) {
                 if (ingredientsList[i].trim().split(':').length !== 2) {
@@ -70,7 +90,25 @@
                 }
             }
 
-            // If all checks pass, proceed with creating the recipe
+            recipeData.push({
+                name: name,
+                description: description,
+                ingredients: ingredientsList,
+            });
+
+            localStorage.setItem("recipeListData", JSON.stringify(recipeData));
+            createRecipeElement({
+                name: name,
+                description: description,
+                ingredients: ingredientsList,
+            });
+
+            closeAddItemMenu();
+        }
+
+        function createRecipeElement(recipe) {
+            var recipeContainer = document.createElement("div");
+            recipeContainer.id = "recipe";
             var data = localStorage.getItem('recipeList');
             var list = new Set();
             if (data == null) {
@@ -78,56 +116,84 @@
             } else {
                 list = new Set(JSON.parse(data));
             }
-
-            var recipeContainer = document.createElement("div");
-            recipeContainer.id = "recipe";
-
             var descriptionContainer = document.createElement("div");
             descriptionContainer.className = "description-text";
 
             var descriptionTextContainer = document.createElement("div");
             descriptionTextContainer.className = "recipe-text user-input";
-            descriptionTextContainer.textContent = description;
+            descriptionTextContainer.textContent = recipe.description;
 
             var ingr = document.createElement("ul");
             ingr.setAttribute("id", "ing");
-
-            for (var i = 0; i < ingredientsList.length; i++) {
-                var ingredientInfo = ingredientsList[i].split(':');
+            var temp = new Set();
+            for (var i = 0; i < recipe.ingredients.length; i++) {
+                var ingredientInfo = recipe.ingredients[i].split(':');
                 var ingredientName = ingredientInfo[0].trim();
+                temp.add(ingredientName);
                 var ingredientQuantity = ingredientInfo[1].trim();
 
                 var li = document.createElement('li');
                 li.appendChild(document.createTextNode(ingredientName + ': ' + ingredientQuantity));
                 ingr.appendChild(li);
             }
+            var people = new Set(JSON.parse(localStorage.getItem('userList')));
+            var allg = document.createElement("ul");
+            allg.setAttribute("id", "allg");
+            for (const i of people) {
+                var li = document.createElement('li');
+                var al = i + " may be allergic to:";
+                var j = new Set(JSON.parse(localStorage.getItem(i +"_allergies")));
+                var t = new Set();
+                console.log(j);
+                for(const m of j) {
+                    if(temp.has(m)) {
+                        t.add(m)
+                    }
+                }
+                if (t.size > 0) {
+                    for (const z of t) {
+                        al = al + " "+ z;
+                    }
+                    li.appendChild(document.createTextNode(al));
+                    allg.appendChild(li);
+                }
+            }
 
             descriptionContainer.append(ingr);
-            localStorage.setItem(name + "_ingredients", JSON.stringify(ingredientsList));
+            localStorage.setItem(recipe.name + "_ingredients", JSON.stringify(recipe.ingredients));
 
             var textContainer = document.createElement("div");
             textContainer.className = "text-container";
 
             var recipeText = document.createElement("div");
             recipeText.className = "recipe-text";
-            recipeText.textContent = name;
-            list.add(name);
+            recipeText.textContent = recipe.name;
+            list.add(recipe.name);
             localStorage.setItem("recipeList", JSON.stringify(Array.from(list)));
 
             var span = document.createElement("SPAN");
-            var txt = document.createTextNode("\u00D7");
+            var txt = document.createTextNode("X");
             span.className = "close";
             span.appendChild(txt);
             span.onclick = function () {
                 var listItem = this.parentElement.parentElement.parentElement;
-                list.delete(name);
-                localStorage.setItem("recipeList", JSON.stringify(Array.from(list)));
-                localStorage.removeItem(name + "_ingredients");
+                bd = JSON.parse(localStorage.getItem('recipeList'));
+                const bad = bd.filter(function (r) {
+                    return r !== recipe.name;
+                });
+                localStorage.setItem("recipeList", JSON.stringify(bad));
+                localStorage.removeItem(recipe.name + "_ingredients");
+                rd = JSON.parse(localStorage.getItem("recipeListData"));
+                const bod = rd.filter(function (r) {
+                    return r.name !== recipe.name;
+                });
+                localStorage.setItem("recipeListData", JSON.stringify(bod));
                 listItem.remove();
             };
             recipeText.appendChild(span);
 
             descriptionContainer.append(descriptionTextContainer);
+            descriptionContainer.append(allg);
             textContainer.appendChild(recipeText);
             recipeContainer.appendChild(textContainer);
             recipeContainer.appendChild(descriptionContainer);
@@ -139,8 +205,8 @@
             document.getElementById("description").value = "";
             document.getElementById("name").value = "";
             document.getElementById("ingredients").value = "";
-            closeForm();
         }
+
     </script>
 </body>
 

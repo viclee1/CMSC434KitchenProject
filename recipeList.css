@@ -4,7 +4,7 @@
 
 
 #header {
-    font-size: 8rem; 
+    font-size: 4rem; 
     margin-left: 2%;
     margin-bottom:10%;
     display: inline;
@@ -15,31 +15,31 @@ body {
 
 /* CSS */
 .addRecipe {
-    border: 5px solid #222222;
-    border-radius: 6px;
     box-sizing: border-box;
-    color: #222222;
     cursor: pointer;
     display: inline-block;
-    font-size: 2rem; /* Use vw unit for font size based on viewport width */
-    font-weight: 600;
-    line-height: 2%; /* Use vh unit for line-height based on viewport height */
-    margin: 0;
-    outline: none;
-    padding: 4.5%; /* Use vw and vh units for padding based on viewport width and height */
+    font-size: 2rem;
+    margin-left: 21rem;
+    padding: 10px;
+    padding-right: 1.1rem; 
+    border-radius: 10px;
     position: relative;
     text-align: center;
     background-color: #A7C7E7;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    
 }
 
 #recipe {
     background-color: #A7C7E7;
-    border: 5px solid #222222;
-    border-radius: 6px;
+    margin-bottom: 1rem;
+    border-radius: 1.7rem;
+    padding: 1rem;
     box-sizing: border-box;
     color: #222222;
     cursor: pointer;
-    display: inline-block;
+    display: flex;
     font-size: 3rem; /* Adjust font size as per your design */
     font-weight: 500;
     outline: none;
@@ -64,7 +64,16 @@ body {
     display: none;
 }
 
+.recipe-text {
+  font-size: 3rem;
+}
 
+#allg {
+  font-size: 2rem;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
 .description-text {
     display: none;
 }
@@ -92,12 +101,49 @@ body {
   text-align: center;
   padding: 14px 45px;
 }
+.p-buttons {
+  width: 14rem;
+  height: 9rem;
+  font-size: 3rem;
+}
 
-.form-popup {
-    margin-right: auto;
-    margin-left: auto;
-    border: 5px solid #222222;
-  }
+#pop-up {
+  position: fixed;
+  height: 60rem;
+  width: 50rem;
+  top: 25%;
+  left: 7.5%;
+  background-color: #A7C7E7;
+  border-color: #fffffe;
+  border-width: 1rem;
+  border-style: solid;
+  border-radius: 2rem;
+  visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  z-index:99;
+}
+
+#pop-up-prompt {
+  font-size: 3rem;
+  text-align: center;
+  margin-top: 6rem;
+}
+
+#pop-up-buttons {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+
+.element {
+  height: 6rem;
+  margin-top: 1rem;
+  font-size: 2rem;
+  width: 93.5%;
+  margin-left: 1rem;
+}
   
   /* Add styles to the form container */
   .form-container {
@@ -113,34 +159,6 @@ body {
     margin-left: 2%;
     font-size: 2rem;
 }
-/* Set a style for the submit/login button */
-.form-container .btn {
-    background-color: #04AA6D;
-    color: white;
-    height: 15%;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    margin-bottom: 0%;
-    opacity: 0.8;
-    position: relative;
-    bottom: 0;
-    margin-top: 5%;
-  }
-  
-  /* Add a red background color to the cancel button */
-  .form-container .cancel {
-    background-color: red;
-    color: white;
-    height: 15%;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    margin-bottom: 0%;
-    opacity: 0.8;
-    position: relative;
-    bottom: 0;
-  }
   textarea { font-size: 30px; }
   input { font-size: 30px; }
   /* Add some hover effects to buttons */
@@ -153,17 +171,21 @@ body {
     position: absolute;
     right: 0;
     top: 0;
-    padding: 12px 16px 12px 16px;
-  }
-  
-  /*Check color of x when hover */
-  .close:hover {
-    background-color: #f44336;
-    color: white;
+    padding: 3rem;
+    font-size: 3rem;
   }
 
-
-  /* Add this to your existing CSS styles */
 .user-input {
-  font-size: 24px; /* Adjust the font size as needed */
+  font-size: 3rem; 
+}
+
+#ing{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#recipeContainer {
+  overflow: scroll;
+  height: 111rem;
 }
